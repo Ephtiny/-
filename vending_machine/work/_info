@@ -1,0 +1,110 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dE:/study/Digital Circuit/Digital_Circuit/vending_machine
+vkey_debounce
+Z1 !s110 1683998152
+!i10b 1
+!s100 ?0202z[NW?Il`693KU<ZA3
+IdKid8Z<?bcWL60[B95zF93
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1683997730
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v
+L0 1
+Z3 OL;L;10.4;61
+r1
+!s85 0
+31
+!s108 1683998152.819000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
+!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
+!i113 0
+Z4 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vseg_scan
+R1
+!i10b 1
+!s100 O`:7j1CPSk:Yj;8a6g:0J1
+IKXfAW3Kb:0=Q5gN5kCL9X1
+R2
+R0
+w1683998024
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1683998152.871000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v|
+!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v|
+!i113 0
+R4
+vsel_drive
+R1
+!i10b 1
+!s100 _Q1:40gO04cLh[]oQhHoC1
+I6:8@86hz<Lzj7YUZ8P;YQ3
+R2
+R0
+w1683997908
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1683998152.929000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
+!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
+!i113 0
+R4
+vtop_vending_machine
+R1
+!i10b 1
+!s100 i6M?CQLOacNO]EeU@T_;i1
+I:]@4V?F11=]O7PNW2GYHP0
+R2
+R0
+w1683998122
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1683998152.984000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v|
+!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v|
+!i113 0
+R4
+vvending_machine
+!s110 1683998153
+!i10b 1
+!s100 lF<U<<=3eJ=;_gbz>K:TX3
+I4@LGmo>lYXGa_WU2eRh6`0
+R2
+R0
+w1683998071
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v
+L0 1
+R3
+r1
+!s85 0
+31
+!s108 1683998153.047000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v|
+!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v|
+!i113 0
+R4
