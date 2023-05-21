@@ -130,7 +130,7 @@ modelsim是Mentor公司开发的优秀的HDL语言仿真软件。
 - 将 `MentorKG.exe`和 `patch_dll.bat`复制到安装目录下的win64文件夹中，运行 `patch_dll.bat`生成`LICENSE.TXT` 文本，将该文本另存于**Modelsim安装目录win64文件夹**中
 - 恢复 `mgls64.dll`文件的”只读“属性
 - 在环境变量中的用户变量中新建一个变量，变量名命名为 `MGLS_LICENSE_FILE`，变量值为刚才生成的 `LICENSE.TXT`的文件路径（具体参考“设置环境变量”）
-- 打开Modelsim即可（如若仍未检测到 `LICENSE`可以尝试重启电脑 
+- 打开Modelsim即可（如若仍未检测到 `LICENSE`可以尝试重启电脑 ）
 
 ### 调整字体大小
 
@@ -292,6 +292,870 @@ Tools > Edit Preference
   最后菜单栏 Simulate > End Simulation 结束并退出仿真，出现提示框的话，点是就可以了（quit -sim）
 
   ![image-20211030152927823](https://gitee.com/ephtiny/image/raw/master/img/202305022353769.png)
+
+# 仿真工程的使用
+
+## 创建工程
+
+- 设置工作路径，然后选择菜单栏 File > New > Project
+
+  ![image-20211031211836325](https://gitee.com/ephtiny/image/raw/master/img/202305192303878.png)
+
+- 在下面的界面中填写工程的名字、工程的路径、以及工程默认库的名字，使用默认的work即可
+
+  初始化配置文件的路径，配置文件选安装路径下的modelsim.ini即可
+
+  选择Copy Library Mappings，这样就可以把这个文件直接加到这个工程中了，使用Reference也可以
+
+  填好后选择OK
+
+  ![image-20211031212256129](https://gitee.com/ephtiny/image/raw/master/img/202305192306298.png)
+
+- 进入工程的设置，可以创建新的文件、添加已有的文件、创建仿真的配置以及创建文件夹（以下以添加已有文件为例）
+
+  ![image-20211031212917150](https://gitee.com/ephtiny/image/raw/master/img/202305192307758.png)
+
+- 从Browse中选择要添加的文件
+
+  当工程已经和添加文件在一个目录下时，所以选择Reference即可，如果是其他路径下的，就可以考虑Copy过来进行管理
+
+  接着OK，close添加界面
+
+  ![image-20211031213350647](https://gitee.com/ephtiny/image/raw/master/img/202305192310426.png)
+
+  此时Project的栏中，多了刚添加的文件，且Status显示的是一个蓝色问号，这代表该文件还未编译；Order就是两者的一个编译顺序以及文件改动的时间
+
+  ![image-20211031213727124](https://gitee.com/ephtiny/image/raw/master/img/202305192311297.png)
+
+## 文件编译
+
+- 如果想改变编译顺序，右键 > Compile > Compile Order
+
+  ![image-20211031214057341](https://gitee.com/ephtiny/image/raw/master/img/202305192313918.png)
+
+  使用这两个箭头来改变文件的编译顺序，点Auto Generate 就会以Top层开始进行编译，如果顺序不正确，它也会自动循环跑，然后找到这个Top层往下一层层的编，可以的话，就自己用箭头先把顺序按正确的来设置好
+
+  ![image-20211031214217952](https://gitee.com/ephtiny/image/raw/master/img/202305192313748.png)
+
+  除了用上面的Auto来编译外，还可以直接单个编译，或者选全部编译（图中两个箭头所指）
+
+  ![image-20211031214942015](https://gitee.com/ephtiny/image/raw/master/img/202305192314740.png)
+
+- 编译成功后，状态会变为绿色的勾，如果代码出问题了，就是个红色的X，这时候就有根据Transcript 的信息去改代码了，跳到Library的窗口，从原本empty的状态变为了一个带 **+** 号的状态
+
+  ![image-20211031215338769](https://gitee.com/ephtiny/image/raw/master/img/202305192314491.png)
+
+- 点开 **+** 号，可以看到两个编译的结果，名字、类型和路径都在信息里，选中test_counter，右键 > Simulate，进入仿真界面
+
+  ![image-20211031215446896](https://gitee.com/ephtiny/image/raw/master/img/202305192315826.png)
+
+- 在Sim窗口含仿真文件的层次结构，接着的基本仿真使用就和 基础仿真 的一样了
+
+- 在Transcript窗口（最下面的命令行）输入：**quit -sim**，退出仿真，准备接下来的
+
+## 文件管理
+
+- 刚开始创建工程是点击Create New Folder创建好文件夹，在工程创建好后还需要新建文件夹来管理，就接着往下操作
+
+- 在Project的窗口，**右键 > Add to Project > Folder** ，在弹出的窗口输入文件夹的名字，按正常的文件夹格式来对文件夹取名就好了，然后OK
+
+  ![image-20211031221613420](https://gitee.com/ephtiny/image/raw/master/img/202305192319480.png)
+
+  这样在Project窗口中也多了一个文件夹的图标
+
+  ![image-20211031221718372](https://gitee.com/ephtiny/image/raw/master/img/202305192325228.png)
+
+- 当文件过多需要细分时，可以按激励文件和模块文件来分类，继续 **右键 > Add to Project > Folder** ，填写子文件夹的名字，且将该文件夹放置在Design Files的文件夹下，然后OK
+
+  ![](https://gitee.com/ephtiny/image/raw/master/img/202305192326208.png)
+
+  重复上述的操作，再加入一个Source的子文件夹，然后效果如下
+
+  ![image-20211031222223962](https://gitee.com/ephtiny/image/raw/master/img/202305192326701.png)
+
+  
+
+  然后就该把文件添加到对应的文件夹下进行管理了，选中 counter.v（如果是多个文件，就选中多个） 然后**右键 > Properties**
+
+  ![image-20211031222515394](https://gitee.com/ephtiny/image/raw/master/img/202305192327370.png)
+
+  在属性窗口，可以从 **Place In Folder** 看到文件放在Top层，修改它，将其放置在Source层，然后OK
+
+  ![image-20211031222706553](https://gitee.com/ephtiny/image/raw/master/img/202305192327514.png)
+
+  重复上述操作，将tcounter.v放入testbench文件夹下，这时的效果如下
+
+  ![image-20211031222902276](https://gitee.com/ephtiny/image/raw/master/img/202305192327838.png)
+
+  此时会发现状态又变成了问号，这是因为改变了文件的位置，工程已经不知道编译结果是否依然有效，所以需要**重新编译**才能继续使用。
+
+## 仿真配置
+
+仿真配置就是将模块和仿真的选项存在了一个文件中，然后直接使用该文件就可以自动按设置好的启动仿真，举个例子：假设你的某个模块需要对仿真的时间精度然后还需要做一些自检啥的，这时候就可以直接用配置文件来操作，以省去不必要的步骤。
+
+- 在Project窗口 右键>Add to Project > Simulation Configuration ,在出现的界面中，填入配置文件的名字，以及放置的文件夹，这边选则放在testbench文件夹下
+
+  ![image-20211031225154956](https://gitee.com/ephtiny/image/raw/master/img/202305192330846.png)
+
+- 接着选中work库下的 **test_counter**，仿真精度（Resolution）改为ps
+
+  ![image-20211031225205494](https://gitee.com/ephtiny/image/raw/master/img/202305192330692.png)
+
+- 选中Verilog的窗口，将**Enable hazard checking (-hazards)** 的选项打勾，然后点Save进行保存
+
+  ![image-20211031225314514](https://gitee.com/ephtiny/image/raw/master/img/202305192331756.png)
+
+- 在文件夹下就有了该仿真配置，直接双击它
+
+  ![image-20211031225407717](https://gitee.com/ephtiny/image/raw/master/img/202305192331174.png)
+
+- 然后在Transcript 窗口可以看到仿真的命令和之前的有了一些不同，是按照刚刚的设置启动了仿真
+
+  ![image-20211031225636299](https://gitee.com/ephtiny/image/raw/master/img/202305192331380.png)
+
+
+
+# 仿真过程碰到的问题
+
+## modelsim-objects窗口为空的解决办法
+
+参考：[modelsim-objects窗口为空的解决办法_modelsimwork为空_Vuko-wxh的博客-CSDN博客](https://blog.csdn.net/weixin_41445387/article/details/90189405)
+
+使用Modelsim进行仿真时，点击start simulateion后，出现Objects空白的问题，导致add wave -hex 后出现“No objects found matching '’”；尽管输入run后，可以运行仿真，但却无法察看wave窗口的波形。
+解决方案：
+
+- 法一：点击工具栏中的“simulate”按钮，调出start smulation窗口，把窗口中最下边optimization栏中的Enable optimization项目前的钩钩去掉，然后选择仿真的文件，点击OK，就一切正常了，能看到objects了。（这里有时候会出现OK点不了，有时候虽然点不了但close重进窗口后发现√已去掉，但Objects仍空白，此时可以尝试法二）
+- 法二：找到modelsim安装目录下的modelsim.ini文件，将VoptFlow = 1注释掉，或者把1改为0，这样默认的状态就是不优化。（修改后，我只有第一次成功了）
+- 法三：右键要仿真的文件，选择Simulate without optimization
+
+​	解决这一问题的核心在于取消优化。
+
+## 仿真过程中，变量不是自己想要的进制
+
+可以在Objects中选择对应的变量右键>Radix>想要显示的进制如：Binary(二进制)
+
+# SystemVerilog基础代码
+
+## Testbench脚本编写
+
+搬运资料：[使用modelsim进行Verilog仿真（包含testbench编写）_modelsim编写verilog_学术萌新的博客-CSDN博客](https://blog.csdn.net/weixin_43506155/article/details/118179930?ops_request_misc=%7B%22request%5Fid%22%3A%22168450801216800217239358%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=168450801216800217239358&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-118179930-null-null.142^v87^control_2,239^v2^insert_chatgpt&utm_term=modelsim testbench&spm=1018.2226.3001.4187)
+
+- 第一句timescale是对时间进行约束，第一个1ns为单位时间，可以理解为一个最基本的时钟周期的时间为1ns，第二个1ns为精度，也就是时间分辨精度，设置为1ns那么在仿真时时间坐标的单位就为1ns。
+
+```systemverilog
+`timescale 1 ns/ 1 ns//仿真的单位时间为1ns，精度为1ps
+```
+
+- 下面这句就是对变量的声明，clk和rstn为led0_module的输入，led0_out为输出。led0_out只能为wire类型，因为在led0_module中输出变量LED_Out是使用assign被赋值，所以testbench中的led0_out只能为wire类型。
+
+```systemverilog
+	reg clk,rstn;
+	wire led0_out;
+```
+
+- 在下面这段代码中，对rstn和clk的行为进行了描述，forever为循环，通常用于时钟的产生，在这里为每1ns时钟电平翻转一次。
+
+  其中 `#10 rstn=1;`中的 `#10`是等待10个时间单位
+
+```systemverilog
+	initial
+	begin
+		rstn=0;
+		#10 rstn=1;
+		clk=0;
+		forever #1 clk=~clk;
+	end
+```
+
+- 最后，下面这段代码用于对模块的实例化。我的理解是这段代码也顺便完成了信号线的pin map功能。即，将上面rstn和clk以及led0_out分别与CLK、RSTn和LED_Out相连接
+
+```systemverilog
+led0_module U1
+	(
+		.CLK(clk),
+		.RSTn(rstn),
+		.LED_Out(led0_out)
+	);
+```
+
+### Testbench总代码
+
+```systemverilog
+`timescale 1 ns/ 1 ns//仿真的单位时间为1ns，精度为1ps
+module led_tb;
+	reg clk,rstn;
+	wire led0_out;
+	initial
+	begin
+		rstn=0;
+		#10 rstn=1;
+		clk=0;
+		forever #1 clk=~clk;
+	end
+led0_module U1
+	(
+		.CLK(clk),
+		.RSTn(rstn),
+		.LED_Out(led0_out)
+	);
+
+endmodule
+```
+
+### 应用模块代码（能理解上面可以跳）
+
+```systemverilog
+module led0_module
+(
+    CLK, RSTn, LED_Out
+);
+
+    input CLK;
+    input RSTn;
+    output LED_Out;
+    
+    /*************************************/
+    
+    parameter T1S = 26'd50;//å¤–éƒ¨æ™¶æŒ¯50M
+    
+    /*************************************/
+    
+    reg [25:0]Count1;
+    
+    always @ ( posedge CLK or negedge RSTn )
+	    if( !RSTn )	
+	        Count1 <= 26'd0;
+	    else if( Count1 == T1S )
+	        Count1 <= 26'd0;
+	    else
+	        Count1 <= Count1 + 1'b1;
+	        
+	/*************************************/
+	
+	reg rLED_Out;
+	
+	always @ ( posedge CLK or negedge RSTn )
+        if( !RSTn ) 
+            rLED_Out <= 1'b0;
+        else if( Count1 >= 26'd0 && Count1 < 26'd25 )
+            rLED_Out <= 1'b1;
+        else 
+            rLED_Out <= 1'b0;
+            
+     /***************************************/
+     
+     assign LED_Out = rLED_Out;
+     
+     /***************************************/
+              
+ endmodule
+```
+
+
+
+# CMOS附录代码
+
+## A.1 引言
+
+### A.1.1 模块
+
+#### 例A.1 组合逻辑
+
+**combinatory_logic.sv**
+
+```systemverilog
+module sillyfunction(input	logic a, b, c,
+		     output	logic y);
+
+	assign y = ~a & ~b & ~c |
+		    a & ~b & ~c |
+		    a & ~b &  c;
+endmodule
+```
+
+- assign 语句用来描述组合逻辑
+- “～”表示非(NOT), “&”表示与(AND),而“|”表示或(OR)
+- logic信号如输入和输出都是布尔变量(0 或1),它们也可以取浮空(Hoating)和不定(undefined)值
+
+**com_logic_tb.sv**
+
+```systemverilog
+`timescale 1 ns/ 1 ns
+module com_logic_tb;
+	logic a, b, c;
+    logic y;
+    //reg a, b, c;
+	//wire y;
+	
+	initial
+	begin 
+	 a = 1'b0;
+	 b = 1'b0;
+	 c = 1'b0;
+	 #100 a = 1'b1;
+	 #100 a = 1'b0;
+	 b = 1'b1;
+	 #100 b = 1'b0;
+	 c = 1'b1;
+	 #100 a = 1'b1;
+	 #100 a = 1'b0;
+	 b = 1'b1;
+	 #100 c = 1'b0;
+	 a = 1'b1;
+	 #100 c = 1'b1;
+	 #100;
+	end
+
+sillyfunction A1
+	(
+		.a(a),
+		.b(b),
+		.c(c),
+		.y(y)
+	);
+
+endmodule
+```
+
+![image-20230520131952503](https://gitee.com/ephtiny/image/raw/master/img/202305201319571.png)
+
+![image-20230520144027688](https://gitee.com/ephtiny/image/raw/master/img/202305201440769.png)
+
+#### 例A.2 32位加法器
+
+**adder.sv**
+
+```systemverilog
+module adder(input	logic [31:0] a,
+			input  logic [31:0] b,
+			output logic [31:0] y);
+			
+    assign y = a + b;
+endmodule    
+```
+
+**tb_adder.sv**
+
+```systemverilog
+`timescale 1 ns/ 1 ns
+module tb_adder;
+    logic [31:0] a, b;
+	logic [31:0] y;
+	
+	initial
+	begin 
+	 a = 32'b0101;
+	 b = 32'b1010;
+	 #100;
+	end
+
+adder A2
+	(
+		.a(a),
+		.b(b),
+		.y(y)
+	);
+
+endmodule
+```
+
+![](https://gitee.com/ephtiny/image/raw/master/img/202305201518107.png)
+
+![image-20230520144040606](https://gitee.com/ephtiny/image/raw/master/img/202305201440654.png)
+
+## A.2 组合逻辑
+
+### A.2.1 按位操作
+
+#### 例A.3 反相器
+
+**inv.sv**
+
+```systemverilog
+module inv(input	logic [3:0] a,
+           output	logic [3:0] y);
+    
+    assign y = ~a;
+endmodule
+```
+
+**tb_inv.sv**
+
+```systemverilog
+`timescale 1 ns/ 1 ns
+module tb_inv;
+	logic [3:0] a;
+	logic [3:0] y;
+	
+	initial
+	begin
+       a = 4'b1;
+	  #100 a = ~a;
+	  #100 a = ~a;
+	  #100 a = ~a;
+	  #100 $stop;
+	// a = 4'b0101;
+	// forever #100 a = ~a;
+	end
+
+inv A3
+	(
+		.a(a),
+		.y(y)
+	);
+
+endmodule
+```
+
+仿真时可能会出现显示为十六进制，可以在Objects中选择对应的变量右键>Radix>Binary(二进制)
+
+![image-20230520151642935](https://gitee.com/ephtiny/image/raw/master/img/202305201516995.png)
+
+#### 例A.4 逻辑门
+
+**gates.sv**
+
+```systemverilog
+module gates(input	logic [3:0] a, b
+             output	logic [3:0] y1, y2,
+             					y3, y4, y5);
+    
+    assign y1 = a & b;		// AND
+    assign y2 = a | b;		// OR
+    assign y3 = a ^ b;		// XOR
+    assign y4 = ~(a & b);	// NAND
+    assign y5 = ~(a | b);	// NOR
+endmodule
+```
+
+- 操作符 (operator)：如“～”,“^”及“|“
+
+- 操作数(operand)：如a、b及y1
+
+- 表达式(expression)：操作符和操作数的组合，如aob或～(a | b)
+
+- 语句(statement)：一条完整的命令如assign y4 = ～(a & b)
+
+  连续赋值语句(continuous assignment statement)：assign out = in1ap in2
+
+  ​	在一条连续赋值语句中每当“=”号右边 的输入变化时，左边的输出就重新进行计算。
+
+
+
+![image-20230520163053749](https://gitee.com/ephtiny/image/raw/master/img/202305201630815.png)
+
+### A.2.2 注释与空白
+
+- /*  */注释多行；//注释一行
+- 对使用空白( white space),即空 格(space)、跳格(tab)和换行符(line break)并不过分讲究
+- g对字母的大小骂教感
+
+### A.2.3 简约操作符
+
+#### 例A.5 8输入与门
+
+**and8.sv**
+
+```systemverilog
+module and8(input	logic [7:0] a,
+            output	logic	    y);
+    
+    assign y = &a;
+endmodule
+// &a 比 assign y = a[7] & a[6] & a[5] & a[4] &
+// 				  a[3] & a[2] & a[1] & a[0];
+// 容易写得多
+```
+
+​	或(OR)、异或(XOR)、与 非(NAND)以及或非(NOR)都有简约操作符 “|”、“^”、“~&” 及 “~|“
+
+
+
+![image-20230520164120437](https://gitee.com/ephtiny/image/raw/master/img/202305201641497.png)
+
+### A.2.4 条件赋值
+
+#### 例A.6 2:1多路开关
+
+```systemverilog
+module mux2(input	logic [3:0] d0, d1,
+            input	logic 	    s,
+            output	logic [3:0] y);
+    
+    assign y = s ? d1 : d0;
+endmodule
+```
+
+​	第一个表达式称为条件(condition)。加果条件表达式s为1,操作符选择第二个表达式d1；如果条件表达式为0,操作符选择第三个表达式d0。
+
+​	“?:”操作符也称为三变量操作符( temary operator),因为它有三个输入。它在C和Java编程语言中也用于同样目的。
+
+![image-20230520164545121](https://gitee.com/ephtiny/image/raw/master/img/202305201645172.png)
+
+#### 例A.7 4:1多路开关
+
+```systemverilog
+module mux4(input	logic [3:0] d0, d1, d2, d3,
+            input	logic [1:0] s,
+            output	logic [3:0] y);
+    
+    assign y = s[1] ? (s[0] ? d3 : d2)
+        		   : (s[0] ? d1 : d0);
+endmodule
+```
+
+![image-20230521151315131](https://gitee.com/ephtiny/image/raw/master/img/202305211513223.png)
+
+​	该多路开关具有多个数据输人(d)和仅一位为1(one-hot)的使能输人 (e)。当使能信号中有一个有效时，相应的数据就传送至输出。例如，当s[1]= s[0]=0时，最 下面的与门unl_s_5产生1,使该多路开关最下面的输人有效，从而使它选取d0[3:0]。
+
+### A.2.5 内部变量
+
+全加器是一个由下式定义的三个输入及两个输出的电路：
+
+![image-20230521151746141](https://gitee.com/ephtiny/image/raw/master/img/202305211517248.png)
+
+如果我们定义两个中间信号P和G;
+
+![image-20230521151817390](https://gitee.com/ephtiny/image/raw/master/img/202305211518430.png)
+
+可以将这个全加器改写为：
+
+![image-20230521151839639](https://gitee.com/ephtiny/image/raw/master/img/202305211518693.png)
+
+**P和G称为内部变量(internal variable)**,因为它们既不是输人也不是输出而只是用在该模块内部。
+
+#### 例A.8 全加器
+
+```systemverilog
+module fulladder(input  wire a, b,cin,
+                 output reg s , cout);
+	reg p, g;
+	assign p = a ^ b;
+	assign g = a & b;
+	assign s = p ^ cin;
+	assign cout = g | (p & cin);
+endmodule
+```
+
+![image-20230521152053263](https://gitee.com/ephtiny/image/raw/master/img/202305211520310.png)
+
+### A.2.6 先权操作符及其他操作符
+
+#### 例A.9 作符优先权
+
+![image-20230521152422183](https://gitee.com/ephtiny/image/raw/master/img/202305211524283.png)
+
+![image-20230521152436594](https://gitee.com/ephtiny/image/raw/master/img/202305211524639.png)
+
+减法包括了2的补码和加法运算
+
+### A.2.7 数字
+
+#### 例A.10 数字
+
+用来说明常数的格式是**N'Bvalue**,这里==N是位数，B是基数，而value是它的值==。
+
+**'b表示二进制 (基2)**,'o表示八进制(基8),**'d表示十进制 (基10)**,以及**'h表示十六进制(基16)**。如果没 有表示出基数，那么就默认基数为10
+
+如果没有蛤出位数，那么就认为该数的位数 与使用它的表达式相同。多个零(0)将自动插入 在该数的前面，使它具有全部位数
+
+![image-20230521153023001](https://gitee.com/ephtiny/image/raw/master/img/202305211530054.png)
+
+### A.2.8 z与x
+
+浮空z，无效x
+
+#### 例A.11 三态缓冲器
+
+```systemverilog
+module tristate (input logic [3:0] a,
+        		input logic 	  en,
+        		output tri 	[3:0] y);
+assign y= en? a: 4'bz;
+endmodule
+```
+
+![image-20230521154626652](https://gitee.com/ephtiny/image/raw/master/img/202305211546742.png)
+
+logic信号只能有一个驱动器。三态总线可以有多个驱动器，所以它们应当被说明成net(网络节点)。 SystemVerilog中的两类net称为tri和trireg。 通常met上每一时刻只能有一个驱动器有效，并且该net就取那个值。如果没有任何驱动器有效，那么tri就浮空(z),而trireg保持它原来的值。如果没有说明输入或输出的类型，那么就认为它是tri类型。
+
+#### 例A.12 定榆入和浮空输入时的真值表
+
+如果一个逻辑门接收一个浮空输人，那么当它不能决定什么是正确的输出值时可能产生一 个x输出。类似地，如果它接收一个无效的或未初始化的输人，那么它也产生一个x输出。 例A.12显示了SystemVerilog如何在逻辑门中合成这两种不同的信号值。
+
+![image-20230521154829418](https://gitee.com/ephtiny/image/raw/master/img/202305211548463.png)
+
+### A.2.9 位混合
+
+#### 例A.13 位混合
+
+```systemverilog
+assign y = {c[2:1], {3{d[0]}}, c[0], 3'b101};
+```
+
+y得到了一个9位的值c~2~c~1~d~0~d~0~d~0~C~0~101
+
+- {}操作符用来姓接总线
+- (3{d[0]}表示将d[0]复制三次
+
+不要将3位的二进制常数3'b101和总线b 相混淆。注意，在常教中说明长度为3位非常 重要，否则有可能在y的中间出现未知数目的前导零。 
+
+如果y比9位还宽，那么在前几个最高有效 位上将放上零。
+
+#### 例A.14 输出拆分(、乘法器)
+
+```systemverilog
+module mu1(input	logic [7:0] a, b,
+           output	logic [7:0] upper, lower);
+    
+    assign {upper, lower} = a*b;
+endmodule
+```
+
+![image-20230521161123900](https://gitee.com/ephtiny/image/raw/master/img/202305211611950.png)
+
+#### 例A.15 符号扩展
+
+```systemverilog
+module signextend(input		logic [15:0] a,
+                  output	logic [31:0] y);
+    
+    assign y = {{16{a[15]}}, a[15:0]};
+endmodule
+```
+
+![image-20230521161314048](https://gitee.com/ephtiny/image/raw/master/img/202305211613100.png)
+
+### A.2.10 延时
+
+#### 例A.16 具有延时的逻辑门
+
+```systemverilog
+`timescale 1ns/1ps
+
+module example(input	logic a, b, c
+               output	logic y);
+    
+    logic, ab, bb, cb, n1, n2, n3;
+    
+    assign #1 {ab, bb, cb} = ~{a, b, c};
+    assign #2 n1 = ab & bb & cb;
+    assign #2 n2 = a  & bb & cb;
+    assign #2 n3 = a  & bb & c ;
+    assign #4 y  = n1 | n2 | n3;
+endmodule
+```
+
+​	SystemVerilog文件可以包括一条时标(timegcale)指令来指出每个时间单位的值。这一语句 的形式为'timescale unit/step。在这一文件 中，每个时间单位为1ns;而模拟的时间分辨率为1 ps。如果文件中没有给出任何时标指令，那么就采用默认的单位和步长(通常这两个值都是1 ns)。
+
+​	#号用来说明延时的单位教。
+
+![image-20230521162908440](https://gitee.com/ephtiny/image/raw/master/img/202305211629502.png)
+
+## A.4 时序逻辑
+
+### A.4.1 寄存器
+
+#### 例A.20 寄存器
+
+```systemverilog
+module flop(input  logic 	   clk，
+            input  logic [3:0] d,
+            output logic [3:0] q);
+    
+	always_ff @(posedge clk)
+		q <= d;
+endmodule
+```
+
+```verilog
+//verilog的always语句：
+always @(sensitivity list)
+	statement;
+```
+
+​	这一语句只有当在敏感表(sensitivity list)中 说明的事件发生时才执行。在本例中，这条语句 为q<=d(读做“q获得d”)。因此，触发器在 时钟正边沿时将d复制到q中，而在其他时刻它 存储q的原来状态。
+
+​	在always语句内部使用<=(非阻塞赋值)而不是assign
+
+​		![image-20230521164555155](https://gitee.com/ephtiny/image/raw/master/img/202305211645231.png)
+
+​	always语句可以用来指明触发器、锁存器或组合逻 辑，这取决于敏感表和语句。但也由于这一灵活 性，使它很容易因硫忽而生成错误的硬件，为此 SystemVerilog引入了always_ff、always_latch 和always comb来减少出现这些常见错误的风 险。always_ff的行为类似于always,但它专门 用来指明敏发器，并且能使工具在被用来指明任何其他东西时就发出警告。
+
+![image-20230521164701800](https://gitee.com/ephtiny/image/raw/master/img/202305211647893.png)
+
+- 在SystemVerilog的always语句中，信号一直保持它们原来的值直到 一个直接引起它们变化的事件发生。因此，这样的代码连同合适的敏感表可以用来描述带存锗器的时序电路。例如，触发器在敏感表中只包括clk,它存储着原来的q值直到clk的下一个上 升沿，即使在此中间d发生变化时也是如此。 
+- 在SyatemVerilog的连续赋值语句中，当任何时候语句右边的任何输入发生变化时，它们就重新求值。因此，这样的代码必须描述组合逻辑。
+
+### A.4.2 可复位寄存器
+
+​	当模拟刚开始或电源首次被应用到一个电路时，触发器的输出是未知的。它在SystemVerilog 中用x表示
+
+​	同步复位发生在时钟上升沿处，而异步复位立即发生。
+
+#### 例A.21 可复位寄存器
+
+​	同步复位需要较少的晶体管数目并能减少在复位的尾部边沿处出现时序问题的风险，但如 果采用时钟门控，那么必须注意使所有的触发器在启动时正确复位。
+
+```systemverilog
+module flopr(input	logic	 	clk,
+             input	logic	 	reset,
+             input	logic [3:0]	d,
+             output	logic [3:0]	q);
+    
+    //同步复位
+    always_ff @(posedge clk)
+        if (reset) q <= 4'b0;
+    	else	  q <= d;
+endmodule
+
+module flopr(input	logic	 	clk,
+             input	logic	 	reset,
+             input	logic [3:0]	d,
+             output	logic [3:0]	q);
+    
+    //异步复位
+    always_ff @(posedge clk, posedge reset)
+        if (reset) q <= 4'b0;
+    	else	  q <= d;
+endmodule
+```
+
+- 在always语句教感表中的多个信号之间用**逗号**或字**or**隔开
+
+![image-20230521213900345](https://gitee.com/ephtiny/image/raw/master/img/202305212139459.png)
+
+### A.4.3 使能寄存器
+
+​	使能寄存器(enahled register)只有当使能(erahle)信号有效时才对时钟做出响应
+
+#### 例A.22 可复位使能寄存器
+
+​	同步可复位的使能寄存器，它在reset和en信号都为假(FALSE)时将保持它原来的值。
+
+```systemverilog
+module flopenr(input  logic 	  clk. 
+               input  logic 	  reset,
+               input  logic 	  en, 
+               input  logic [3:0] d, 
+               output logic [3:0] q);
+    
+	//同步复位 
+    always_ff @(posedge clk) 
+        if 		(reset) q <= 4'b0: 
+        else if  (en)    g <= d;
+endmodule
+```
+
+![image-20230521214508031](https://gitee.com/ephtiny/image/raw/master/img/202305212145165.png)
+
+### A.4.4 多个寄存器
+
+#### 例A.23 同步器
+
+​	由两个前后直接串联在一起的触发器构成
+
+```systemverilog
+module sync(input	logic clk,
+            input	logic d,
+            output	logic q);
+    
+    logic n1;
+   
+    always_ff @(posedge clk)
+        begin
+            n1 <= d;
+            q  <= n1;
+        end
+endmodule
+```
+
+![image-20230521215221166](https://gitee.com/ephtiny/image/raw/master/img/202305212152214.png)
+
+​	在clk的上升沿，d复制到n1,与此同时n1复制到q.
+
+### A.4.5 锁存器
+
+#### 例A.24 D锁存器
+
+​	D锁存器在时钟为高电平(HIGH)时透明从而允许数据从输入流至输出；它在时钟为低电平(LOW)时不透明，因而保持它原来的状态。
+
+```systemverilog
+module latch(input	logic	    clk,
+             input	logic [3:0] d,
+             output	logic [3:0] q);
+    
+    always_latch
+        if (clk) q <= d;
+endmodule
+```
+
+​	always_latch等价于alwayse(clk,d)并且是SystemVerilog中描述锁存器的优先方式。**锁存器在每当clk或d变化时求值**。
+
+​	==如果clk为 高电平(HIGH),d将一直流至q,因此这一代码 描述的是正电平灵敏锁存器，否则q将保持它原来的值==
+
+![image-20230521215626680](https://gitee.com/ephtiny/image/raw/master/img/202305212156749.png)
+
+### A.4.6 计数器
+
+​	 有两种方式描述带同步复位的4位计数器。
+
+#### 例A.25 计数器(行为级风格)
+
+​	第一种方法(行为级)表示为包含一个4位寄存器和一个加法器的时序电路
+
+```systemverilog
+module counter(input	logic		clk,
+               input	logic		reset,
+               output	logic  [3:0] q);
+    
+    always_ff @(posedge clk)
+        if (reset)	q <= 4'b0;
+    	else	   q <= q+1
+```
+
+![image-20230521220118075](https://gitee.com/ephtiny/image/raw/master/img/202305212201135.png)
+
+#### 例A.26 计数器(结构级风格)
+
+​	第二种方法(结构级)直接说明寄存器和加法器模块
+
+```systemverilog
+module counter(input	logic		clk,
+               input	logic		reset,
+               output	logic  [3:0] q);
+    
+    logic  [3:0] nextq;
+    
+    flopr qflop(clk, reset, nextq, q);
+    adder inc(q, 4'b0001, nextq);
+endmodule
+```
+
+![image-20230521220401504](https://gitee.com/ephtiny/image/raw/master/img/202305212204561.png)
+
+### A.4.7 移位寄存器
+
+#### 例A.27 带并行装载的移位寄存器
+
+```systemverilog
+module shiftreg(input	logic		clk,
+                input	logic		reset, load, 
+                input 	logic		sin,
+                input	logic  [3:0] d,
+                output	logic  [3:0] q,
+                output	logic		sout);
+    
+    always_ff @(posedge clk)
+        if (reset)		q <= 0;
+    	else if (load)	q <= d;
+    	else			q <= {q[2:0], sin};	
+    
+    assign sout = q[3];
+endmodule
+```
+
+![image-20230521220920005](https://gitee.com/ephtiny/image/raw/master/img/202305212209065.png)
 
 # 实例
 

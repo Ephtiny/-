@@ -1,0 +1,43 @@
+{E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_inv
+
+Top level modules:
+	tb_inv
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module adder
+
+Top level modules:
+	adder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module sillyfunction
+
+Top level modules:
+	sillyfunction
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module inv
+
+Top level modules:
+	inv
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_adder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_adder.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_adder
+
+Top level modules:
+	tb_adder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_com_logic
+
+Top level modules:
+	tb_com_logic
+
+} {} {}}
