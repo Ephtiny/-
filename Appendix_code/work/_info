@@ -18,10 +18,10 @@ n@_opt
 Z2 OL;O;10.4;61
 R0
 T_opt1
-!s110 1684567251
-VioS]Jk^d`DG[YQ0`oMWLO2
-04 3 4 work inv fast 0
-=1-9c2dcd0cb78e-646874d3-185-7554
+!s110 1685252337
+V4i`SPK:4RS?meS<iOz^e90
+04 8 4 work tb_gates fast 0
+=1-9c2dcd0cb78e-6472e8eb-14d-69b8
 R1
 n@_opt1
 R2
@@ -37,7 +37,7 @@ R2
 R0
 vadder
 Z3 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
-Z4 !s110 1685243664
+Z4 !s110 1685252039
 !i10b 1
 !s100 fHNHZh4WI[3SW?QbSh6Vh3
 Ijn2_TmjYi;MUZ]Th9h<Gd2
@@ -53,18 +53,20 @@ Z6 OL;L;10.4;61
 r1
 !s85 0
 31
-!s108 1685243664.588000
+!s108 1685252039.135000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv|
 !i113 0
 Z7 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 vand8
 R3
-R4
+R5
+r1
+!s85 0
+31
 !i10b 1
 !s100 `S[JNZcjBVJfE_c358WPQ0
 IUE1J2M`XAMY8_9QTenTEb2
-R5
 !s105 and8_sv_unit
 S1
 R0
@@ -73,21 +75,108 @@ w1685243521
 FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/and8.sv
 L0 1
 R6
-r1
-!s85 0
-31
-!s108 1685243664.859000
+!s108 1685252039.402000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/and8.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/and8.sv|
 !i113 0
 R7
+vcounter
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 1LGV@;ZJ6J_?HM6SKkE6N2
+IITN_E]nU;kdZl5OIfYkY00
+!s105 counter_sv_unit
+S1
+R0
+w1685250698
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv
+L0 1
+R6
+!s108 1685252040.218000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv|
+!i113 0
+R7
+vdecoder3_8
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 SamF9Be6[6YdEg5X1Emdj2
+IBP4^:W`nN3KUaQJ<g1:ed3
+!s105 decoder3_8_sv_unit
+S1
+R0
+w1685250023
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv
+L0 1
+R6
+!s108 1685252040.330000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv|
+!i113 0
+R7
+vflop
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 cV^:z^>QnGCU;zM6EdlcH2
+I=a[gMeZKGNgM][P[1H?C=1
+!s105 flop_sv_unit
+S1
+R0
+w1685250700
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv
+L0 1
+R6
+!s108 1685252039.903000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv|
+!i113 0
+R7
+vfulladder
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 iBZgck;S0RlPJDIg_X:l53
+I1KIW<ki8b^D_>2YA5<Ml=3
+!s105 fulladder_sv_unit
+S1
+R0
+w1685249659
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv
+L0 1
+R6
+!s108 1685252039.674000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv|
+!i113 0
+R7
 vgates
 R3
-!s110 1685243721
+R5
+r1
+!s85 0
+31
 !i10b 1
 !s100 O8M=I5aDN^<RIF4nOIoXL2
 IQMQYch?4m90?]z6NRK6EK0
-R5
 !s105 gates_sv_unit
 S1
 R0
@@ -96,10 +185,7 @@ w1685243718
 FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/gates.sv
 L0 1
 R6
-r1
-!s85 0
-31
-!s108 1685243721.969000
+!s108 1685252039.351000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/gates.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/gates.sv|
 !i113 0
@@ -122,9 +208,31 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.693000
+!s108 1685252039.245000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv|
+!i113 0
+R7
+vlatch
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 c6Sm]YR[H:z@m0Fcb]FP90
+IY;I70O_:]cd5GO6aTffW_3
+!s105 latch_sv_unit
+S1
+R0
+w1685249907
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv
+L0 1
+R6
+!s108 1685252040.114000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv|
 !i113 0
 R7
 vmux2
@@ -145,11 +253,57 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.908000
+!s108 1685252039.459000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2.sv|
 !i113 0
 R7
+vmux2N
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 5Bl1QKgDRU2nkIoZHEIkO1
+I>Igfk=GGkIkEbnB3HJoC61
+!s105 mux2N_sv_unit
+S1
+R0
+w1685250235
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv
+L0 1
+R6
+!s108 1685252040.434000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv|
+!i113 0
+R7
+nmux2@n
+vmux4_8N
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 8kZ99^04KGV6U@<]A7hc[3
+I<KD1TINBLXVXb`_9eJz@X1
+!s105 mux4_8N_sv_unit
+S1
+R0
+w1685250224
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv
+L0 1
+R6
+!s108 1685252040.492000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv|
+!i113 0
+R7
+nmux4_8@n
 vsillyfunction
 R3
 R4
@@ -168,9 +322,31 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.449000
+!s108 1685252039.028000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv|
+!i113 0
+R7
+vsync
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 j<iJm3MSa?RU[0jK0mLI10
+IkG^Io@=ZXAgf;Fe5R8:TG2
+!s105 sync_sv_unit
+S1
+R0
+w1685249859
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv
+L0 1
+R6
+!s108 1685252040.008000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv|
 !i113 0
 R7
 vtb_adder
@@ -191,9 +367,31 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.640000
+!s108 1685252039.190000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_adder.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_adder.sv|
+!i113 0
+R7
+vtb_and8
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 IUiznbiR`52;<gI@3XMIY2
+IBjhh?T7OlFkG7h31aI6E41
+!s105 tb_and8_sv_unit
+S1
+R0
+w1685252676
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv
+L0 3
+R6
+!s108 1685252728.753000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv|
 !i113 0
 R7
 vtb_com_logic
@@ -214,9 +412,120 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.535000
+!s108 1685252039.081000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv|
+!i113 0
+R7
+vtb_counter
+R3
+!s110 1685256316
+!i10b 1
+!s100 X[EfD[c3a=G;DmVQo_HiD2
+I:5mDc5ElKUPhQzLchCWMN1
+R5
+!s105 tb_counter_sv_unit
+S1
+R0
+w1685256306
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv
+L0 2
+R6
+r1
+!s85 0
+31
+!s108 1685256316.069000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv|
+!i113 0
+R7
+vtb_decoder3_8
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 RaKeB4RG42GLBcnYz@mCZ3
+IhP]6VC2mE4@`k;R6ROgfJ2
+!s105 tb_decoder3_8_sv_unit
+S1
+R0
+w1685250236
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv
+L0 2
+R6
+!s108 1685252040.380000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv|
+!i113 0
+R7
+vtb_flop
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 O>Y>VYTiE1l3:_LagXTH21
+IjQd79OV5^ZhW?eXZSQO]z2
+!s105 tb_flop_sv_unit
+S1
+R0
+w1685254647
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv
+L0 2
+R6
+!s108 1685254651.076000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv|
+!i113 0
+R7
+vtb_fulladder
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 oaYHife?2dWIW[i15WBC61
+Igfim1Qi8?Ya`HlSCPoI7`3
+!s105 tb_fulladder_sv_unit
+S1
+R0
+w1685249736
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv
+L0 3
+R6
+!s108 1685252039.727000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv|
+!i113 0
+R7
+vtb_gates
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 L_6FIRH=U[S6PYF;8[D<H2
+IP?RE=SbXPi3lAbDz4Z;KW1
+!s105 tb_gates_sv_unit
+S1
+R0
+w1685249516
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv
+L0 3
+R6
+!s108 1685252039.520000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv|
 !i113 0
 R7
 vtb_inv
@@ -237,8 +546,142 @@ R6
 r1
 !s85 0
 31
-!s108 1685243664.748000
+!s108 1685252039.298000
 !s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv|
+!i113 0
+R7
+vtb_latch
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 U6;XOVOBo@6z<>Vn`Ih]f2
+IF3XOJNGO0c^DHic26@fIe2
+!s105 tb_latch_sv_unit
+S1
+R0
+w1685249964
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv
+L0 2
+R6
+!s108 1685252040.167000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv|
+!i113 0
+R7
+vtb_mux2N
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 2Kn<Jc0oQMgQi^nOn;Yzl0
+I1>O[jQEciLf0P<IB8WR6V2
+!s105 tb_mux2_sv_unit
+S1
+R0
+w1685252266
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv
+L0 2
+R6
+!s108 1685252269.234000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv|
+!i113 0
+R7
+ntb_mux2@n
+vtb_mux4_8N
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 d6J8fB4?`b6ch;>iYXV[i0
+ISSO<^1oLzn2V>DK=?<8Ph3
+!s105 tb_mux4_8N_sv_unit
+S1
+R0
+w1685251896
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv
+L0 3
+R6
+!s108 1685252040.548000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv|
+!i113 0
+R7
+ntb_mux4_8@n
+vtb_sync
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 l?MS<TY1ZLieh_?_3o6mF0
+IF?bjaRTI[K:[o^[@<O9oQ2
+!s105 tb_sync_sv_unit
+S1
+R0
+w1685254800
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv
+L0 2
+R6
+!s108 1685254805.512000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv|
+!i113 0
+R7
+vtb_tristate
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 gh^XU`=]Dj=7l^1no_54>1
+IYMEgW_Y`NfDGX`IY4d^Z[2
+!s105 tb_tristate_sv_unit
+S1
+R0
+w1685253491
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv
+L0 2
+R6
+!s108 1685253497.015000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv|
+!i113 0
+R7
+vtristate
+R3
+R5
+r1
+!s85 0
+31
+!i10b 1
+!s100 j=b]G<WPiBoJbZW<4adk;3
+Ib?0T<98n6k13:c1L]AAW01
+!s105 tristate_sv_unit
+S1
+R0
+w1685249735
+8E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv
+FE:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv
+L0 1
+R6
+!s108 1685252039.790000
+!s107 E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv|
 !i113 0
 R7

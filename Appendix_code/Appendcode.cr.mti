@@ -1,16 +1,107 @@
-{E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv}
+{E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_sync.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_sync
+
+Top level modules:
+	tb_sync
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/fulladder.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module fulladder
+
+Top level modules:
+	fulladder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/latch.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module latch
+
+Top level modules:
+	latch
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module mux2
+
+Top level modules:
+	mux2
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_decoder3_8
+
+Top level modules:
+	tb_decoder3_8
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_flop.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_flop
+
+Top level modules:
+	tb_flop
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux4_8N.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_mux4_8N
+
+Top level modules:
+	tb_mux4_8N
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/counter.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module counter
+
+Top level modules:
+	counter
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tristate.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tristate
+
+Top level modules:
+	tristate
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_gates.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_gates
+
+Top level modules:
+	tb_gates
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_mux2.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_mux2N
+
+Top level modules:
+	tb_mux2N
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux2N.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module mux2N
+
+Top level modules:
+	mux2N
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_inv.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
 -- Compiling module tb_inv
 
 Top level modules:
 	tb_inv
 
-} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv}
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/mux4_8N.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
--- Compiling module adder
+-- Compiling module mux4_8N
 
 Top level modules:
-	adder
+	mux4_8N
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/and8.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/and8.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module and8
+
+Top level modules:
+	and8
 
 } {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/combinatory_logic.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
@@ -18,6 +109,27 @@ Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
 
 Top level modules:
 	sillyfunction
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/gates.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/gates.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module gates
+
+Top level modules:
+	gates
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_tristate.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_tristate
+
+Top level modules:
+	tb_tristate
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/sync.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module sync
+
+Top level modules:
+	sync
 
 } {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/inv.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
@@ -32,6 +144,48 @@ Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
 
 Top level modules:
 	tb_adder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/decoder3_8.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module decoder3_8
+
+Top level modules:
+	decoder3_8
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_fulladder.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_fulladder
+
+Top level modules:
+	tb_fulladder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/adder.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module adder
+
+Top level modules:
+	adder
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_and8.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_and8
+
+Top level modules:
+	tb_and8
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_latch.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_latch
+
+Top level modules:
+	tb_latch
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/flop.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module flop
+
+Top level modules:
+	flop
 
 } {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_com_logic.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014

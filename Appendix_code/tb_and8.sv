@@ -1,0 +1,24 @@
+`timescale 1ns/1ns
+
+module tb_and8 ();
+  logic [7:0] a;
+  logic		 y;
+  
+  and8 A5 (
+    . a(a),
+    . y(y)
+  );
+  
+  initial 
+	begin 
+    	a = 8'b11111111; 
+	#50; 
+	a = 8'b11110000; 
+    	#50; 
+	a = 8'b00001111; 
+	#50; 
+	a = 8'b01010101; 
+	#50;
+	$stop;
+  	end
+endmodule

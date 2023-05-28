@@ -740,7 +740,7 @@ endmodule
 
   ​	在一条连续赋值语句中每当“=”号右边 的输入变化时，左边的输出就重新进行计算。
 
-**tb_gates**
+**tb_gates.sv**
 
 ```systemverilog
 `timescale 1ns/1ns
@@ -805,7 +805,7 @@ endmodule
 // 容易写得多
 ```
 
-​	或(OR)、异或(XOR)、与 非(NAND)以及或非(NOR)都有简约操作符 “|”、“^”、“~&” 及 “~|“
+​	或(OR)、异或(XOR)、与非(NAND)以及或非(NOR)都有简约操作符 “`|`”、“`^`”、“`~&`” 及 “`~|`“
 
 **tb_and8.sv**
 
@@ -825,13 +825,13 @@ module tb_and8 ();
 	begin 
     // 激活输入值
     a = 8'b11111111; 
-	#5_000; 
+	#50; 
 	a = 8'b11110000; 
-    #5_000; 
+    #50; 
 	a = 8'b00001111; 
-	#5_000; 
+	#50; 
 	a = 8'b01010101; 
-	#5_000;
+	#50;
 	$stop;
   	end
 endmodule
@@ -859,47 +859,6 @@ endmodule
 ​	第一个表达式称为条件(condition)。加果条件表达式s为1,操作符选择第二个表达式d1；如果条件表达式为0,操作符选择第三个表达式d0。
 
 ​	“?:”操作符也称为三变量操作符( temary operator),因为它有三个输入。它在C和Java编程语言中也用于同样目的。
-
-**tb_mux2.sv**
-
-```systemverilog
-`timescale 1ns/1ns
-module tb_mux2 ();     
-    logic [1:0] s;     
-    logic [7:0] d0, d1;   
-    logic [7:0] y;         
-    mux2 A6 (        
-        . s (s),          
-        . d0(d0),         
-        . d1(d1),         
-        . y (y));          
-initial  
-begin         
-// Test case 1: select=0, input_0=5, input_1=10        
-s = 2'b 00;         
-d0 = 8'd 5;         
-d1 = 8'd 10;         
-#100;               
- // Test case 2: select=1, input_0=5, input_1=10        
-s = 2'b 01;       
-d0 = 8'd 5;        
-d1 = 8'd 10;        
-#100;                
-// Test case 3: select=0, input_0=255, input_1=127        
-s = 2'b 00;        
-d0 = 8'd 255;       
-d1 = 8'd 127;        
-#100;               
-// Test case 4: select=1, input_0=255, input_1=127        
-select = 2'b 01;        
-input_0 = 8'd 255;        
-input_1 = 8'd 127;        
-#100;                
-// End simulation        
-$stop;    
-end    
-endmodule
-```
 
 ![image-20230520164545121](https://gitee.com/ephtiny/image/raw/master/img/202305201645172.png)
 
@@ -1048,7 +1007,7 @@ module tb_tristate();
   // Declare signals
   logic [3:0] a;
   logic en;
-  wire [3:0] y;
+  wire [3:0] y;  // tri  [3:0] y;
 
   tristate A11 (
     . a(a),
@@ -1213,8 +1172,9 @@ module tb_flop();
   );
 
   // Clock generation
-  always #5 clk = ~clk; // 时钟周期为10个时间单位
+  always #50 clk = ~clk; 
   initial begin
+    clk = 0;
     // Test case 1
     d = 4'b0000;
     #100;
@@ -1344,9 +1304,10 @@ module tb_sync();
   );
 
   // Clock generation
-  always #5 clk = ~clk; // 时钟周期为10个时间单位
+  always #50 clk = ~clk; // 时钟周期为10个时间单位
 
   initial begin
+    clk = 0;
     // Test case 1
     d = 1'b0;
     #100;
@@ -1453,7 +1414,8 @@ module counter(input	logic		clk,
     
     always_ff @(posedge clk)
         if (reset)	q <= 4'b0;
-    	else	   q <= q+1
+    	else	   q <= q+1;
+endmodule
 ```
 
 **tb_counter.sv**
@@ -1474,10 +1436,11 @@ module tb_counter();
   );
 
   // Clock generation
-  always #5 clk = ~clk; // 时钟周期为10个时间单位
+  always #50 clk = ~clk;
 
   // Stimulus generation
   initial begin
+    clk = 0;
     // Test case 1
     reset = 1'b1;
     #100;
@@ -1494,10 +1457,6 @@ module tb_counter();
     #200;
     $stop;
   end
-
-  // Clock driver
-  always #5 clk = ~clk;
-
 endmodule
 ```
 
@@ -2053,7 +2012,7 @@ endmodule
 **mux2N.sv**
 
 ```systemverilog
-module mux2
+module mux2N
     #(parameter width = 8)
     (input	logic  [width-1:0] d0, d1,
      input	logic  			  s,
@@ -2065,18 +2024,59 @@ endmodule
 
 - SystemVerilog九许使用输入和输出前面的#(parameter⋯)语句定义参数。parameter语句包括该参教即(width)(宽度)的默认值(8),输入和输出中的位数可以由这个参教决定。
 
+**tb_mux2N.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_mux2N ();     
+    logic [1:0] s;     
+    logic [7:0] d0, d1;   
+    logic [7:0] y;         
+    mux2 A6 (        
+        . s (s),          
+        . d0(d0),         
+        . d1(d1),         
+        . y (y));          
+initial  
+begin         
+// Test case 1: select=0, input_0=5, input_1=10        
+s = 2'b 00;         
+d0 = 8'd 5;         
+d1 = 8'd 10;         
+#100;               
+ // Test case 2: select=1, input_0=5, input_1=10        
+s = 2'b 01;       
+d0 = 8'd 5;        
+d1 = 8'd 10;        
+#100;                
+// Test case 3: select=0, input_0=255, input_1=127        
+s = 2'b 00;        
+d0 = 8'd 255;       
+d1 = 8'd 127;        
+#100;               
+// Test case 4: select=1, input_0=255, input_1=127        
+s = 2'b 01;        
+d0 = 8'd 255;        
+d1 = 8'd 127;        
+#100;                
+// End simulation        
+$stop;    
+end    
+endmodule
+```
+
 **mux4_8N.sv**
 
 ```systemverilog
-module mux4_8(input		logic  [7:0] d0, d1, d2, d3,
+module mux4_8N(input		logic  [7:0] d0, d1, d2, d3,
               input		logic  [1:0] s,
               output	logic  [7:0] y);
     
     logic  [7:0] low, hi;
     
-    mux2 lowmux(d0, d1, s[0], low);
-    mux2 himux(d2, d3, s[0], hi);
-    mux2 outmux(low, hi, s[1], y);
+    mux2N lowmux(d0, d1, s[0], low);
+    mux2N himux(d2, d3, s[0], hi);
+    mux2N outmux(low, hi, s[1], y);
 endmodule
 ```
 
@@ -2085,12 +2085,12 @@ endmodule
 ```systemverilog
 `timescale 1ns/1ns
 
-module tb_mux4 ();
-  reg [3:0] d0, d1, d2, d3;
-  reg [1:0] s;
-  wire [3:0] y;
+module tb_mux4_8N ();
+  logic [3:0] d0, d1, d2, d3;
+  logic [1:0] s;
+  logic [3:0] y;
   
-  mux4 A40 (
+  mux4_8N A40 (
     . d0(d0),
     . d1(d1),
     . d2(d2),
@@ -2107,26 +2107,26 @@ module tb_mux4 ();
     d3 = 4'b1111;
     // 设置选择信号
     s = 2'b00;
-#5_000;
+	#50;
     d0 = 4'b0000;
     d1 = 4'b0011;
     d2 = 4'b1100;
     d3 = 4'b1111;
     s = 2'b01;
-    #5_000;
+    #50;
     d0 = 4'b0000;
     d1 = 4'b0011;
     d2 = 4'b1100;
     d3 = 4'b1111;
     s = 2'b10;
-    #5_000;
+    #50;
     d0 = 4'b0000;
     d1 = 4'b0011;
     d2 = 4'b1100;
     d3 = 4'b1111;
     s = 2'b11;
-#5_000;
- $stop;
+	#50;
+ 	$stop;
   end
 endmodule
 
@@ -2135,15 +2135,15 @@ endmodule
 ​	8位的4:1多路开关采用默认宽度对三个2 :1多路开关进行实例化，而12位的多路开关mux4_12需要**利用在实例名前面的#()取代默认宽度**
 
 ```systemverilog
-module mux4_12(input	logic  [11:0] d0, d1, d2, d3,
+module mux4_12N(input	logic  [11:0] d0, d1, d2, d3,
                input	logic  [1:0] s,
                output	logic  [11:0] y);
     
     logic  [11:0] low, hi;
     
-    mux2 #(12) lowmux(d0, d1, s[0], low);
-    mux2 #(12) himux(d2, d3, s[0], hi);
-    mux2 #(12) outmux(low, hi, s[1], y);
+    mux2N #(12) lowmux(d0, d1, s[0], low);
+    mux2N #(12) himux(d2, d3, s[0], hi);
+    mux2N #(12) outmux(low, hi, s[1], y);
 endmodule
 ```
 

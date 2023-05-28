@@ -1,0 +1,35 @@
+`timescale 1ns/1ns
+module tb_tristate();
+  // Declare signals
+  logic [3:0] a;
+  logic en;
+  wire [3:0] y;
+
+  tristate A11 (
+    . a(a),
+    . en(en),
+    . y(y)
+  );
+
+  // Stimulus generation
+  initial begin
+    // Test case 1
+    a = 4'b0000;
+    en = 1;
+    #100;
+    // Test case 2
+    a = 4'b1111;
+    en = 1;
+    #100;
+    // Test case 3
+    a = 4'b1010;
+    en = 0;
+	#100;
+    // Test case 4
+    a = 4'b0101;
+    en = 0;
+    #100;
+    $stop;
+  end
+endmodule
+

@@ -1,0 +1,37 @@
+`timescale 1ns/1ns
+module tb_sync();
+  // Declare signals
+  logic clk;
+  logic d;
+  logic q;
+
+  // Instantiate the DUT (Device Under Test)
+  sync A23 (
+    .clk(clk),
+    .d(d),
+    .q(q)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk; // ?????10?????
+
+  initial begin
+    // Test case 1
+    d = 1'b0;
+    #100;
+    // Test case 2
+    d = 1'b1;
+    #100;
+    // Test case 3
+    d = 1'b0;
+    #100;
+    // Test case 4
+    d = 1'b1;
+    #100;
+    $stop;
+  end
+
+  // Clock driver
+  always #5 clk = ~clk;
+
+endmodule
