@@ -577,11 +577,11 @@ endmodule
 - “～”表示非(NOT), “&”表示与(AND),而“|”表示或(OR)
 - logic信号如输入和输出都是布尔变量(0 或1),它们也可以取浮空(Hoating)和不定(undefined)值
 
-**com_logic_tb.sv**
+**tb_com_logic.sv**
 
 ```systemverilog
 `timescale 1 ns/ 1 ns
-module com_logic_tb;
+module tb_com_logic;
 	logic a, b, c;
     logic y;
     //reg a, b, c;
@@ -716,9 +716,9 @@ endmodule
 **gates.sv**
 
 ```systemverilog
-module gates(input	logic [3:0] a, b
+module gates(input	logic [3:0] a, b,
              output	logic [3:0] y1, y2,
-             					y3, y4, y5);
+             				   y3, y4, y5);
     
     assign y1 = a & b;		// AND
     assign y2 = a | b;		// OR
@@ -739,6 +739,44 @@ endmodule
   连续赋值语句(continuous assignment statement)：assign out = in1ap in2
 
   ​	在一条连续赋值语句中每当“=”号右边 的输入变化时，左边的输出就重新进行计算。
+
+**tb_gates**
+
+```systemverilog
+`timescale 1ns/1ns
+
+module tb_gates;
+    logic a, b;
+    logic y1, y2, y3, y4, y5;
+ 
+gates A3 (
+    . a(a),
+	. b(b),
+	. y1(y1),
+	. y2(y2), 
+	. y3(y3), 
+	. y4(y4),
+    . y5(y5)
+        );
+ 
+initial begin
+a<=0;
+b<=0;
+#100 
+a<=0;
+b<=1;
+#100 
+a<=1;
+b<=0;
+#100 
+a<=1;
+b<=1;
+#100 $stop;
+end
+ 
+endmodule
+
+```
 
 
 
@@ -769,6 +807,36 @@ endmodule
 
 ​	或(OR)、异或(XOR)、与 非(NAND)以及或非(NOR)都有简约操作符 “|”、“^”、“~&” 及 “~|“
 
+**tb_and8.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+
+module tb_and8 ();
+  logic [7:0] a;
+  logic		 y;
+  
+  and8 A5 (
+    . a(a),
+    . y(y)
+  );
+  
+  initial 
+	begin 
+    // 激活输入值
+    a = 8'b11111111; 
+	#5_000; 
+	a = 8'b11110000; 
+    #5_000; 
+	a = 8'b00001111; 
+	#5_000; 
+	a = 8'b01010101; 
+	#5_000;
+	$stop;
+  	end
+endmodule
+```
+
 
 
 ![image-20230520164120437](https://gitee.com/ephtiny/image/raw/master/img/202305201641497.png)
@@ -776,6 +844,8 @@ endmodule
 ### A.2.4 条件赋值
 
 #### 例A.6 2:1多路开关
+
+**mux2.sv**
 
 ```systemverilog
 module mux2(input	logic [3:0] d0, d1,
@@ -790,9 +860,52 @@ endmodule
 
 ​	“?:”操作符也称为三变量操作符( temary operator),因为它有三个输入。它在C和Java编程语言中也用于同样目的。
 
+**tb_mux2.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_mux2 ();     
+    logic [1:0] s;     
+    logic [7:0] d0, d1;   
+    logic [7:0] y;         
+    mux2 A6 (        
+        . s (s),          
+        . d0(d0),         
+        . d1(d1),         
+        . y (y));          
+initial  
+begin         
+// Test case 1: select=0, input_0=5, input_1=10        
+s = 2'b 00;         
+d0 = 8'd 5;         
+d1 = 8'd 10;         
+#100;               
+ // Test case 2: select=1, input_0=5, input_1=10        
+s = 2'b 01;       
+d0 = 8'd 5;        
+d1 = 8'd 10;        
+#100;                
+// Test case 3: select=0, input_0=255, input_1=127        
+s = 2'b 00;        
+d0 = 8'd 255;       
+d1 = 8'd 127;        
+#100;               
+// Test case 4: select=1, input_0=255, input_1=127        
+select = 2'b 01;        
+input_0 = 8'd 255;        
+input_1 = 8'd 127;        
+#100;                
+// End simulation        
+$stop;    
+end    
+endmodule
+```
+
 ![image-20230520164545121](https://gitee.com/ephtiny/image/raw/master/img/202305201645172.png)
 
 #### 例A.7 4:1多路开关
+
+**mux4.sv**
 
 ```systemverilog
 module mux4(input	logic [3:0] d0, d1, d2, d3,
@@ -826,14 +939,64 @@ endmodule
 
 #### 例A.8 全加器
 
+**fulladder.sv**
+
 ```systemverilog
-module fulladder(input  wire a, b,cin,
-                 output reg s , cout);
-	reg p, g;
+module fulladder(input  logic a, b,cin,
+                 output logic s , cout);
+	logic p, g;
 	assign p = a ^ b;
 	assign g = a & b;
 	assign s = p ^ cin;
 	assign cout = g | (p & cin);
+endmodule
+```
+
+**tb_fulladder.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+
+module tb_fulladder();
+  
+  logic a, b, cin;
+  logic s, cout;
+  
+  // Instantiate the DUT (Device Under Test)
+  fulladder dut (
+    . a(a),
+    . b(b),
+    . cin(cin),
+    . s(s),
+    . cout(cout)
+  );
+  initial begin
+    // 测试用例 1
+    a = 0; b = 0; cin = 0;
+    #100;
+    // 测试用例 2
+    a = 0; b = 0; cin = 1;
+    #100;
+    // 测试用例 3
+    a = 0; b = 1; cin = 0;
+    #100;
+    // 测试用例 4
+    a = 0; b = 1; cin = 1;
+    #100;
+    // 测试用例 5
+    a = 1; b = 0; cin = 0;
+    #100;
+    // 测试用例 6
+    a = 1; b = 0; cin = 1;
+    #100;
+    // 测试用例 7
+    a = 1; b = 1; cin = 0;
+    #100;
+    // 测试用例 8
+    a = 1; b = 1; cin = 1;
+    #100;
+    $stop;
+  end
 endmodule
 ```
 
@@ -867,12 +1030,54 @@ endmodule
 
 #### 例A.11 三态缓冲器
 
+**tristate.sv**
+
 ```systemverilog
 module tristate (input logic [3:0] a,
         		input logic 	  en,
         		output tri 	[3:0] y);
 assign y= en? a: 4'bz;
 endmodule
+```
+
+**tb_tristate.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_tristate();
+  // Declare signals
+  logic [3:0] a;
+  logic en;
+  wire [3:0] y;
+
+  tristate A11 (
+    . a(a),
+    . en(en),
+    . y(y)
+  );
+
+  // Stimulus generation
+  initial begin
+    // Test case 1
+    a = 4'b0000;
+    en = 1;
+    #100;
+    // Test case 2
+    a = 4'b1111;
+    en = 1;
+    #100;
+    // Test case 3
+    a = 4'b1010;
+    en = 0;
+	#100;
+    // Test case 4
+    a = 4'b0101;
+    en = 0;
+    #100;
+    $stop;
+  end
+endmodule
+
 ```
 
 ![image-20230521154626652](https://gitee.com/ephtiny/image/raw/master/img/202305211546742.png)
@@ -904,6 +1109,8 @@ y得到了一个9位的值c~2~c~1~d~0~d~0~d~0~C~0~101
 
 #### 例A.14 输出拆分(、乘法器)
 
+**mu1.sv**
+
 ```systemverilog
 module mu1(input	logic [7:0] a, b,
            output	logic [7:0] upper, lower);
@@ -915,6 +1122,8 @@ endmodule
 ![image-20230521161123900](https://gitee.com/ephtiny/image/raw/master/img/202305211611950.png)
 
 #### 例A.15 符号扩展
+
+**signextend.sv**
 
 ```systemverilog
 module signextend(input		logic [15:0] a,
@@ -929,6 +1138,8 @@ endmodule
 ### A.2.10 延时
 
 #### 例A.16 具有延时的逻辑门
+
+**example.sv**
 
 ```systemverilog
 `timescale 1ns/1ps
@@ -958,6 +1169,8 @@ endmodule
 
 #### 例A.20 寄存器
 
+**flop.sv**
+
 ```systemverilog
 module flop(input  logic 	   clk，
             input  logic [3:0] d,
@@ -982,6 +1195,43 @@ always @(sensitivity list)
 
 ​	always语句可以用来指明触发器、锁存器或组合逻 辑，这取决于敏感表和语句。但也由于这一灵活 性，使它很容易因硫忽而生成错误的硬件，为此 SystemVerilog引入了always_ff、always_latch 和always comb来减少出现这些常见错误的风 险。always_ff的行为类似于always,但它专门 用来指明敏发器，并且能使工具在被用来指明任何其他东西时就发出警告。
 
+**tb_flop.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_flop();
+  // Declare signals
+  logic 	  clk;
+  logic [3:0] d;
+  logic [3:0] q;
+
+  // Instantiate the DUT (Device Under Test)
+  flop dut (
+    . clk(clk),
+    . d(d),
+    . q(q)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk; // 时钟周期为10个时间单位
+  initial begin
+    // Test case 1
+    d = 4'b0000;
+    #100;
+    // Test case 2
+    d = 4'b1111;
+    #100;
+    // Test case 3
+    d = 4'b1010;
+    #100;
+    // Test case 4
+    d = 4'b0101;
+    #100;
+    $stop;
+  end
+endmodule
+```
+
 ![image-20230521164701800](https://gitee.com/ephtiny/image/raw/master/img/202305211647893.png)
 
 - 在SystemVerilog的always语句中，信号一直保持它们原来的值直到 一个直接引起它们变化的事件发生。因此，这样的代码连同合适的敏感表可以用来描述带存锗器的时序电路。例如，触发器在敏感表中只包括clk,它存储着原来的q值直到clk的下一个上 升沿，即使在此中间d发生变化时也是如此。 
@@ -996,6 +1246,8 @@ always @(sensitivity list)
 #### 例A.21 可复位寄存器
 
 ​	同步复位需要较少的晶体管数目并能减少在复位的尾部边沿处出现时序问题的风险，但如 果采用时钟门控，那么必须注意使所有的触发器在启动时正确复位。
+
+**flopr.sv**
 
 ```systemverilog
 module flopr(input	logic	 	clk,
@@ -1033,6 +1285,8 @@ endmodule
 
 ​	同步可复位的使能寄存器，它在reset和en信号都为假(FALSE)时将保持它原来的值。
 
+**flopenr.sv**
+
 ```systemverilog
 module flopenr(input  logic 	  clk. 
                input  logic 	  reset,
@@ -1055,6 +1309,8 @@ endmodule
 
 ​	由两个前后直接串联在一起的触发器构成
 
+**sync.sv**
+
 ```systemverilog
 module sync(input	logic clk,
             input	logic d,
@@ -1070,6 +1326,48 @@ module sync(input	logic clk,
 endmodule
 ```
 
+**tb_sync.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_sync();
+  // Declare signals
+  logic clk;
+  logic d;
+  logic q;
+
+  // Instantiate the DUT (Device Under Test)
+  sync A23 (
+    .clk(clk),
+    .d(d),
+    .q(q)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk; // 时钟周期为10个时间单位
+
+  initial begin
+    // Test case 1
+    d = 1'b0;
+    #100;
+    // Test case 2
+    d = 1'b1;
+    #100;
+    // Test case 3
+    d = 1'b0;
+    #100;
+    // Test case 4
+    d = 1'b1;
+    #100;
+    $stop;
+  end
+
+  // Clock driver
+  always #5 clk = ~clk;
+
+endmodule
+```
+
 ![image-20230521215221166](https://gitee.com/ephtiny/image/raw/master/img/202305212152214.png)
 
 ​	在clk的上升沿，d复制到n1,与此同时n1复制到q.
@@ -1079,6 +1377,8 @@ endmodule
 #### 例A.24 D锁存器
 
 ​	D锁存器在时钟为高电平(HIGH)时透明从而允许数据从输入流至输出；它在时钟为低电平(LOW)时不透明，因而保持它原来的状态。
+
+**latch.sv**
 
 ```systemverilog
 module latch(input	logic	    clk,
@@ -1094,6 +1394,46 @@ endmodule
 
 ​	==如果clk为 高电平(HIGH),d将一直流至q,因此这一代码 描述的是正电平灵敏锁存器，否则q将保持它原来的值==
 
+**tb_latch.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_latch();
+  // Declare signals
+  logic 	  clk;
+  logic [3:0] d;
+  logic [3:0] q;
+
+  // Instantiate the DUT (Device Under Test)
+  latch dut (
+    . clk(clk),
+    . d(d),
+    . q(q)
+  );
+
+  // Stimulus generation
+  initial begin
+    // Test case 1
+    d = 4'b0000;
+    clk = 0;
+    #100;
+    // Test case 2
+    d = 4'b1111;
+    clk = 0;
+    #100;
+    // Test case 3
+    d = 4'b1010;
+    clk = 1;
+    #100;
+    // Test case 4
+    d = 4'b0101;
+    clk = 1;
+    #100;
+    $stop;
+  end
+endmodule
+```
+
 ![image-20230521215626680](https://gitee.com/ephtiny/image/raw/master/img/202305212156749.png)
 
 ### A.4.6 计数器
@@ -1103,6 +1443,8 @@ endmodule
 #### 例A.25 计数器(行为级风格)
 
 ​	第一种方法(行为级)表示为包含一个4位寄存器和一个加法器的时序电路
+
+**counter.sv**
 
 ```systemverilog
 module counter(input	logic		clk,
@@ -1114,11 +1456,58 @@ module counter(input	logic		clk,
     	else	   q <= q+1
 ```
 
+**tb_counter.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_counter();
+  // Declare signals
+  logic clk;
+  logic reset;
+  logic [3:0] q;
+
+  // Instantiate the DUT (Device Under Test)
+  counter dut (
+    . clk(clk),
+    . reset(reset),
+    . q(q)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk; // 时钟周期为10个时间单位
+
+  // Stimulus generation
+  initial begin
+    // Test case 1
+    reset = 1'b1;
+    #100;
+    // Test case 2
+    reset = 1'b0;
+    #100;
+    // Test case 3
+    #100;
+    // Test case 4
+    reset = 1'b1;
+    #100;
+    // Test case 5
+    reset = 1'b0;
+    #200;
+    $stop;
+  end
+
+  // Clock driver
+  always #5 clk = ~clk;
+
+endmodule
+```
+
 ![image-20230521220118075](https://gitee.com/ephtiny/image/raw/master/img/202305212201135.png)
 
 #### 例A.26 计数器(结构级风格)
 
 ​	第二种方法(结构级)直接说明寄存器和加法器模块
+
+**counter.sv**
 
 ```systemverilog
 module counter(input	logic		clk,
@@ -1137,6 +1526,8 @@ endmodule
 ### A.4.7 移位寄存器
 
 #### 例A.27 带并行装载的移位寄存器
+
+**shiftreg.sv**
 
 ```systemverilog
 module shiftreg(input	logic		clk,
@@ -1211,6 +1602,8 @@ endmodule
 
 ![image-20230527211612736](https://gitee.com/ephtiny/image/raw/master/img/202305272213749.png)
 
+**sevenseg.sv**
+
 ```systemverilog
 module sevenseg(input	logic  [3:0] data,
                 output	logic  [6:0] segments);
@@ -1239,6 +1632,8 @@ endmodule
 
 #### 例A.31 3:8译码器
 
+**decoder3_8.sv**
+
 ```systemverilog
 module decoder3_8(input		logic  [2:0] a,
                   output	logic  [7:0] y);
@@ -1259,6 +1654,52 @@ endmodule
 
 - 这里不需要default语句，因为已覆盖了所有情形
 
+**tb_decoder3_8.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_decoder3_8();
+  // Declare signals
+  logic [2:0] a;
+  logic [7:0] y;
+
+  // Instantiate the DUT (Device Under Test)
+  decoder3_8 A31 (
+    . a(a),
+    . y(y)
+  );
+
+  // Stimulus generation
+  initial begin
+    // Test case 1
+    a = 3'b000;
+    #100;
+    // Test case 2
+    a = 3'b001;
+    #100;
+    // Test case 3
+    a = 3'b010;
+    #100;
+    // Test case 4
+    a = 3'b011;
+    #100;
+    // Test case 5
+    a = 3'b100;
+    #100;
+    // Test case 6
+    a = 3'b101;
+    #100;
+    // Test case 7
+    a = 3'b110;
+    #100;
+    // Test case 8
+    a = 3'b111;
+    #100;
+    $stop;
+  end
+endmodule
+```
+
 ![image-20230527212204709](https://gitee.com/ephtiny/image/raw/master/img/202305272122769.png)
 
 ### A.5.2 if语句
@@ -1268,6 +1709,8 @@ endmodule
 ​	**if语句必频出现在always语句的内部**
 
 #### 例A.32 优先权电路
+
+**priorityckt.sv**
 
 ```systemverilog
 module priorityckt(input	logic  [3:0] a,
@@ -1419,6 +1862,8 @@ endmodule
 
 #### 例A.36 除3有限状态机
 
+**divideby3FSM.sv**
+
 ```systemverilog
 module divideby3FSM(input	logic clk,
                     input	logic reset,
@@ -1522,6 +1967,8 @@ assign y = (state ==  s0 | state ==  s1);
 
 #### 例A.38 History FSM
 
+**historyFSM.sv**
+
 ```systemverilog
 module historyFSM(input		logic clk,
                   input		logic reset,
@@ -1603,6 +2050,8 @@ endmodule
 
 ​	例A.40说明一个具有默认宽度为8位的参数化2:1多路开关，然后利用它建立一个8位和12位的4:1多路开关
 
+**mux2N.sv**
+
 ```systemverilog
 module mux2
     #(parameter width = 8)
@@ -1616,6 +2065,8 @@ endmodule
 
 - SystemVerilog九许使用输入和输出前面的#(parameter⋯)语句定义参数。parameter语句包括该参教即(width)(宽度)的默认值(8),输入和输出中的位数可以由这个参教决定。
 
+**mux4_8N.sv**
+
 ```systemverilog
 module mux4_8(input		logic  [7:0] d0, d1, d2, d3,
               input		logic  [1:0] s,
@@ -1627,6 +2078,58 @@ module mux4_8(input		logic  [7:0] d0, d1, d2, d3,
     mux2 himux(d2, d3, s[0], hi);
     mux2 outmux(low, hi, s[1], y);
 endmodule
+```
+
+**tb_mux4_8N.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+
+module tb_mux4 ();
+  reg [3:0] d0, d1, d2, d3;
+  reg [1:0] s;
+  wire [3:0] y;
+  
+  mux4 dut (
+    . d0(d0),
+    . d1(d1),
+    . d2(d2),
+    . d3(d3),
+    . s(s),
+    . y(y)
+  );
+  
+  initial begin
+    // 设置输入值
+    d0 = 4'b0000;
+    d1 = 4'b0011;
+    d2 = 4'b1100;
+    d3 = 4'b1111;
+    // 设置选择信号
+    s = 2'b00;
+#5_000;
+    d0 = 4'b0000;
+    d1 = 4'b0011;
+    d2 = 4'b1100;
+    d3 = 4'b1111;
+    s = 2'b01;
+    #5_000;
+    d0 = 4'b0000;
+    d1 = 4'b0011;
+    d2 = 4'b1100;
+    d3 = 4'b1111;
+    s = 2'b10;
+    #5_000;
+    d0 = 4'b0000;
+    d1 = 4'b0011;
+    d2 = 4'b1100;
+    d3 = 4'b1111;
+    s = 2'b11;
+#5_000;
+ $stop;
+  end
+endmodule
+
 ```
 
 ​	8位的4:1多路开关采用默认宽度对三个2 :1多路开关进行实例化，而12位的多路开关mux4_12需要**利用在实例名前面的#()取代默认宽度**
@@ -1650,6 +2153,8 @@ endmodule
 
 ​	该译码器使用阻塞赋值将所有位先置0,然后再将合适的位改为1
 
+**decoder.sv**
+
 ```systemverilog
 module decoder #(parameter N = 3)
     		   (input	logic  [N-1:0]    a,
@@ -1668,6 +2173,8 @@ endmodule
 #### 例A.42 参数化的N榆入与门
 
 ​	HDL也提供**generate语句，它可以根据参数值生成数量可变的硬件**。generate**支持for循环语句**和**if语句**以决定生成多少个什么类型的硬件(很容易生成大量并不有意需要的硬件)
+
+**andN.sv**
 
 ```systemverilog
 module andN
@@ -1708,6 +2215,8 @@ endmodule
 ​	例A.43描述了一个具有独立读和写数据总线的单口64字×32位同步RAM。
 
 ​	当写使能we有效时，din在时钟上升沿时被写人到RAM的所选地址中。任何时候，RAM被读出到dout上
+
+**ram.sv**
 
 ```systemverilog
 module ram #(parameter N = 6, M = 32)
@@ -1763,6 +2272,8 @@ endmodule
 
 ​	例A.45描述了一个具有三个端口的同步寄存器堆
 
+**ram3port.sv**
+
 ```systemverilog
 module ram3port #(parameter N = 6, M = 32)
     (input	logic		   clk,
@@ -1789,6 +2300,8 @@ endmodule
 #### 例A.48 ROM
 
 ​	例A.46描述了一个4字 ×3位的ROM
+
+**rom.sv**
 
 ```systemverilog
 module rom(input	logic  [1:0] adr,
