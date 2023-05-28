@@ -963,7 +963,7 @@ module tb_fulladder();
   logic s, cout;
   
   // Instantiate the DUT (Device Under Test)
-  fulladder dut (
+  fulladder  A8(
     . a(a),
     . b(b),
     . cin(cin),
@@ -1206,7 +1206,7 @@ module tb_flop();
   logic [3:0] q;
 
   // Instantiate the DUT (Device Under Test)
-  flop dut (
+  flop A20 (
     . clk(clk),
     . d(d),
     . q(q)
@@ -1405,7 +1405,7 @@ module tb_latch();
   logic [3:0] q;
 
   // Instantiate the DUT (Device Under Test)
-  latch dut (
+  latch A24 (
     . clk(clk),
     . d(d),
     . q(q)
@@ -1467,7 +1467,7 @@ module tb_counter();
   logic [3:0] q;
 
   // Instantiate the DUT (Device Under Test)
-  counter dut (
+  counter A25 (
     . clk(clk),
     . reset(reset),
     . q(q)
@@ -2090,7 +2090,7 @@ module tb_mux4 ();
   reg [1:0] s;
   wire [3:0] y;
   
-  mux4 dut (
+  mux4 A40 (
     . d0(d0),
     . d1(d1),
     . d2(d2),
