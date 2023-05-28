@@ -26,6 +26,13 @@ Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
 Top level modules:
 	mux2
 
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_counter.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_counter
+
+Top level modules:
+	tb_counter
+
 } {} {}} {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/Appendix_code/tb_decoder3_8.sv}
 Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
 -- Compiling module tb_decoder3_8

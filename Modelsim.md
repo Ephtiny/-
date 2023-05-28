@@ -1849,7 +1849,7 @@ module divideby3FSM(input	logic clk,
 endmodule
 ```
 
-​	由于下一状态逗鲜应当是组合逻辑，因此即使状态11应当从不发生，但仍必须有一个默认值(default)
+​	由于下一状态逻辑应当是组合逻辑，因此即使状态11应当从不发生，但仍必须有一个默认值(default)
 
 - 如果a等于b, 那么相等比较(equality comparison)(a==b)的求值结果为1,否则为0。
 - 不相等比较(inequality comparison)(a!=b)执行相反的操作，即若a不等于b,求值结果为1。
@@ -1860,7 +1860,7 @@ endmodule
 
 
 
-​	**一个给定的信号只能在个always/process中赋值**，否则将意味着两个硬件的输出短接在一起
+​	**一个给定的信号只能在一个always中赋值**，否则将意味着两个硬件的输出短接在一起
 
 ### A.6.2 状态枚举
 
@@ -1898,7 +1898,7 @@ endmodule
 - typedef语句定义statetype为2位logic值，它具有三种可能性之一：s0、s1或s2
 - state和nextstate为statetype信号
 
-​	所枚举的编码按数字顺序陕认：S0=00, $1=01,S2=10。但编码也可以由用户明确设 定。以下一小段代码将这些状态城码成3位的 仅一位为1(one-hot)的值：
+​	所枚举的编码按数字顺序陕认：S0=00, $1=01,S2=10。但编码也可以由用户明确设定。以下一小段代码将这些状态城码成3位的仅一位为1(one-hot)的值：
 
 ```systemverilog
 typedef enum logic [2:0] {s0 = 3'b001,
@@ -1961,7 +1961,7 @@ module historyFSM(input		logic clk,
     // 输出逻辑
     assign x = ((state == s1 | state == s2) & ~a) |
         	   ((state == s3 | state == s4) & a);
-    assign y = (state ==  s2 & ~a) | (state == s4 &a);
+    assign y = (state == s2 & ~a) | (state == s4 &a);
 endmodule
 ```
 
@@ -4424,6 +4424,10 @@ endmodule
 ​	在两个always模块描述方法基础上，使用三个always模块，一个always模块采用同步时序描述状态转移，一个always采用组合逻辑判断状态转移条件，描述状态转移规律，另一个always模块描述状态输出(可以用组合电路输出，也可以时序电路输出)。
 
 #### 模版代码
+
+- 复位、当前状态变更（成为next_state）
+- 复位、下一状态变更
+- 复位、根据当前状态（或下一状态）输出
 
 ```systemverilog
 //第一个进程，同步时序always模块，格式化描述次态寄存器迁移到现态寄存器
