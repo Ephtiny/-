@@ -1157,6 +1157,867 @@ endmodule
 
 ![image-20230521220920005](https://gitee.com/ephtiny/image/raw/master/img/202305212209065.png)
 
+## A.5 使用Always/Process语句描述组合逻辑
+
+#### 例A.28 反相器(使用always)
+
+```systemverilog
+module inv(input	logic  [3:0] a,
+           output	logic  [3:0] y);
+    
+    always_comb
+        y = ~a;
+endmodule
+```
+
+- always_comb等价于always @(*)
+
+  每当 always语句内部<=或=号右边的信号变化时always_canb就对always内部的语句量新求值。
+
+- 一组阻塞赋值(=)是按它们在代码中出现的顺序求值的，这和我们在标准编程语言中所期望的情形一样。但一组非阻塞赋值(<=)是并发求值，所有语句右边的表达式都是在任何语句左边更新之前求值的
+
+  assign语句通常用在always语句的外面并且也是并发赋值的
+
+#### 例A.29 全加器(使用always)
+
+```systemverilog
+module fulladder(input	logic a, b, cin,
+                 output	logic s, cout);
+    
+    logic p, g;
+    always_comb
+        begin
+            p = a ^ b;  // 阻塞
+            g = a & b;  // 阻塞
+            
+            s = p ^ cin;
+            cout = g | (p & cin);
+        end
+endmodule
+```
+
+- always@(a,b,cin)或always @(*}本来就等价于always_comb
+- 每当a、b或 cin变化时所有这三条语句都对always代码块 中的内容重新求值。**但always_comb优先来用**（能使SystemVerilog工具在代 码块无意中描述时序迈样时产生一个普告）
+- 由于有多条语句出现在always语句中， 所以**必须有begin/end结构**；在flopr例子中并没有要求有begin/ end结构，因为**if/else可以认为是单条语句**
+- 阻塞赋值中，先计算p,然后g,再后 s,最后cout
+
+​	always语句用来对组合逻辑建模是一个很差的应用，但case和f语句能很方便地对较复杂的组合逻辑建 模。注意，**case和if语句只能出现在always语句的内部**
+
+### A.5.1 case语句
+
+​	**case语句必须出现在always/process语句的内部**
+
+#### 例A.30 7段显示译码器
+
+![image-20230527211612736](https://gitee.com/ephtiny/image/raw/master/img/202305272213749.png)
+
+```systemverilog
+module sevenseg(input	logic  [3:0] data,
+                output	logic  [6:0] segments);
+    
+    always_comb
+        case {data}
+            //			    abc_defg
+            0: segments = 7'b111_1110;
+            1: segments = 7'b011_0000;
+            2: segments = 7'b110_1101;
+            3: segments = 7'b111_1001;
+            4: segments = 7'b011_0011;
+            5: segments = 7'b101_1011;
+            6: segments = 7'b101_1111;
+            7: segments = 7'b111_0000;
+            8: segments = 7'b111_1111;
+            9: segments = 7'b111_1011;
+            default: segments = 7'b000_0000;
+        endcase
+endmodule
+```
+
+- **default子句**是一种方便的方式可用来**定义所有未明确列出情形的输出**，从而保征了所描述的是一个组合逻辑
+
+![image-20230527211621437](https://gitee.com/ephtiny/image/raw/master/img/202305272117966.png)
+
+#### 例A.31 3:8译码器
+
+```systemverilog
+module decoder3_8(input		logic  [2:0] a,
+                  output	logic  [7:0] y);
+    
+    always_comb
+        case (a)
+            3'b000: y = 8'b00000001;
+            3'b001: y = 8'b00000010;
+            3'b010: y = 8'b00000100;
+            3'b011: y = 8'b00001000;
+            3'b100: y = 8'b00010000;
+            3'b101: y = 8'b00100000;
+            3'b110: y = 8'b01000000;
+            3'b111: y = 8'b10000000;
+        endcase
+endmodule
+```
+
+- 这里不需要default语句，因为已覆盖了所有情形
+
+![image-20230527212204709](https://gitee.com/ephtiny/image/raw/master/img/202305272122769.png)
+
+### A.5.2 if语句
+
+​	always语句也可以包含if语句，f后面可以接一条else语句。**当所有可能的输入组合都已说明时，该语句表示组合逻辑**；**否则它生成时序逻辑**(如同A.4.5节中的锁存器)
+
+​	**if语句必频出现在always语句的内部**
+
+#### 例A.32 优先权电路
+
+```systemverilog
+module priorityckt(input	logic  [3:0] a,
+                   output	logic  [3:0] y);
+    
+    always_comb
+        if		(a[3]) y = 4'b1000;
+    	else if (a[2]) y = 4'b0100;
+    	else if (a[1]) y = 4'b0010;
+    	else if (a[0]) y = 4'b0001;
+   		else		  y = 4'b0000;
+endmodule
+```
+
+![image-20230527212922462](https://gitee.com/ephtiny/image/raw/master/img/202305272129536.png)
+
+### A.5.3 SystemVerllog Casez
+
+​	System Verilog还提供**casez语句用来描述含有无关状态(don't care)(在casez语句中采用?来表示)的真值表**
+
+#### 例A.33 使用casez描述优先权电路
+
+```systemverilog
+module priority_casez(input		logic  [3:0] a,
+                      output	logic  [3:0] y);
+    
+    always_comb
+        casez(a)
+            4'b1???: y = 4'b1000;
+            4'b01??: y = 4'b0100;
+            4'b001?: y = 4'b0010;
+            4'b0001; y = 4'b0001;
+            default: y = 4'b0000;
+        endcase
+endmodule
+```
+
+![image-20230527213444504](https://gitee.com/ephtiny/image/raw/master/img/202305272134565.png)
+
+### *A.5.4 阻塞与非阻塞赋值
+
+- 使用always_ff @ (posedge clk)和非阻塞赋值对同步时序逻辑建模
+
+  ```systemverilog
+  always_ff @ (posedge clk)
+      begin
+          n1 <= d;   // 非阻塞
+          q  <= n1;  // 非阻塞
+      end
+  ```
+
+- 使用连续赋值对简单的组合逻辑建模
+
+  ```systemverilog
+  assign y = s ? d1 : d0
+  ```
+
+- 使用always_canb和阻塞赋值对比较复杂的组合逻辑建模，在这些地方使用always语句比较有利
+
+  ```systemverilog
+  always_comb
+      begin
+          p = a ^ b;  //
+          g = a & b;  //
+          s = p ^ cin;
+          cout = g | (p & cin);
+      end
+  ```
+
+- 不要对一个以上的always语句或连续贼值语句中的同一信号进行贼值。但例外是：三态总线
+
+#### *A.5.4.1 组合逻辑
+
+​	对全加速器如果使用非阻塞赋值，例如例A.29的全加速器中，假设一开始a,b,cin全为0，则p、g、s和cout也都为0，在某一时刻a变化为1触发always语句，有;
+
+![image-20230527215303374](https://gitee.com/ephtiny/image/raw/master/img/202305272153426.png)
+
+##### *例A.34 使用非阻塞赋值描述全加器
+
+使用非阻塞赋值进行描述(不建议使用)
+
+```systemverilog
+// 非阻塞赋值（不建议）
+module fulladder(input	logic a, b, cin,
+                 output	logic s, cout);
+    
+    logic p, g;
+    always_comb
+        begin
+            p <= a ^ b;  // 非阻塞
+            g <= a & b;  // 非阻塞
+            
+            s <= p ^ cin;
+            cout <= g | (p & cin);
+        end
+endmodule
+```
+
+a、b、cin发生变化时，四个非阻塞赋值并发赋值，之后由于p发生变化，触发第二次求值（虽然结果与阻塞赋值一致，但需要两次赋值）
+
+如果always语句中的敏感表写成了always @(a, b,cin)而不是always_ccmb或always e (*),那么该语句在p或g变化时将不重新求值。
+
+#### *A.5.4.2 时序逻辑
+
+​	例A.23中的同步器使用非阻塞赋值完成了正确建模。在时钟上升沿时，当n1复制至q时d也同时复制至n1,所以该代码正确描述了两个寄存器。例如，假设最初d=0,n1=1且q=0。在时钟上升沿时，以下两个赋值并发发生，所以该时钟沿之后，n1=0及q=1。
+
+​	例A.35错误地试图用阻塞赋值描述同一模块。在clk上升沿时，d复制至nl。然后n1的这个新值复制至q,使d错误地同时出现在n1和q上。如果d=0及n1=1,那么在该时钟沿之后，n1=q=0。
+
+##### *例A.35 使用阻塞赋值的精糕综合器
+
+```systemverilog
+module syncbad(input	logic clk,
+               input	logic d,
+               output	logic q);
+    
+    logic n1;
+    always_ff @ (posedge clk)
+        begin
+            n1 =  d;  // blocking
+            q  = n1;  // blocking
+        end
+endmodule
+```
+
+![image-20230527220414944](https://gitee.com/ephtiny/image/raw/master/img/202305272204005.png)
+
+​	**在对时序逻辑建模时应当在always语句中无例外地使用非阻塞赋值**。 虽然采用足够聪明的办法，如颠倒赋值的顺序，你可以使阻塞赋能值正确工作，但阻塞赋值不能 提供任何优点而只会引人出现无意行为的风险。而且使用阻塞赋值时无论怎样安拼顺序，某些 时序电路都将不能工作
+
+## A.6 有限状态机
+
+有两种类型的有限状态机(Finite State Machine,FSM)
+
+- 在Mealy状态机(Mealy machine)(见图A.32(a))中，输出是当前状态和输人的函数；
+- 在Moore状态机(Moore machine)(见图A.32(b))中， 输出只是当前状态的函数
+
+![image-20230527221154604](https://gitee.com/ephtiny/image/raw/master/img/202305272212658.png)
+
+​	在这两种类型中，PSM可以划分为状态机、下一状态逻辑及输出逻辑。
+
+### A.6.1 FSM例子
+
+![image-20230527221351050](https://gitee.com/ephtiny/image/raw/master/img/202305272213106.png)
+
+​	例A.36描述了图A.33中的除3(divide-by-3)FSM,它具有一 个同步复位用来初始化FSM
+
+​	下一状态和输出逻辑块都是组合电路
+
+​	这是一个Moore状态机的例子，确实这个FSM没有输入，只有时钟和复位。
+
+#### 例A.36 除3有限状态机
+
+```systemverilog
+module divideby3FSM(input	logic clk,
+                    input	logic reset,
+                    output	logic y);
+    
+    logic [1:0] state, nextstate;
+    
+    // 状态寄存器
+    always_ff @ (posedge clk)
+        if (reset) state <= 2'b00;
+        else	   state <= nextstate;
+    
+    // 下一状态逻辑
+    always_comb
+        case (state)
+            2'b00: nextstate = 2'b01;
+            2'b01: nextstate = 2'b10;
+            2'b10: nextstate = 2'b00;
+            default: nextstate = 2'b00;
+        endcase
+    
+    // 输出逻辑
+    assign y = (state ==  2'b00);
+endmodule
+```
+
+​	由于下一状态逗鲜应当是组合逻辑，因此即使状态11应当从不发生，但仍必须有一个默认值(default)
+
+- 如果a等于b, 那么相等比较(equality comparison)(a==b)的求值结果为1,否则为0。
+- 不相等比较(inequality comparison)(a!=b)执行相反的操作，即若a不等于b,求值结果为1。
+
+![image-20230527222731890](https://gitee.com/ephtiny/image/raw/master/img/202305272227958.png)
+
+- 图A.34显示了一个状态转移图，图中双圈表明S0为复位状态
+
+
+
+​	**一个给定的信号只能在个always/process中赋值**，否则将意味着两个硬件的输出短接在一起
+
+### A.6.2 状态枚举
+
+​	SystemVerlog支持枚举(enumeration)类型作为一种表示信息的抽象方式而不需要指定具体的二进制编码。例如，例A.36中描述的除3有限状态机使用了三个状态。我们**可以利用枚举类型给这些状态命名**而不必用二进制值来表示它们，这使代码可读性更好并易于修改。 例A.37采用枚举状态的方式重写了这个除3 FSM,但硬件保持不变。
+
+#### 例A.37 状态枚举
+
+```systemverilog
+module divideby3FSM(input	logic clk,
+                    input	logic reset,
+                    output	logic y);
+    
+    typedef enum logic [1:0] {s0, s1, s2} statetype;
+    statetype state, nextstate;
+    
+    // 状态寄存器
+    always_ff @ (posedge clk)
+        if (reset) state <= s0;
+        else	   state <= nextstate;
+    
+    // 下一状态逻辑
+    always_comb
+        case (state)
+            s0: nextstate = s1;
+            s1: nextstate = s2;
+            s2: nextstate = s0;
+            default: nextstate = s0;
+        endcase
+    
+    // 输出逻辑
+    assign y = (state ==  s0);
+endmodule
+```
+
+- typedef语句定义statetype为2位logic值，它具有三种可能性之一：s0、s1或s2
+- state和nextstate为statetype信号
+
+​	所枚举的编码按数字顺序陕认：S0=00, $1=01,S2=10。但编码也可以由用户明确设 定。以下一小段代码将这些状态城码成3位的 仅一位为1(one-hot)的值：
+
+```systemverilog
+typedef enum logic [2:0] {s0 = 3'b001,
+                          s1 = 3'b010,
+                          s2 = 3'b100} statetype;
+```
+
+​	如果因某种原因，我们希望在状态s0和s1时输出高电平(HIGH),那么可以将输出逻辑修改如下：
+
+```systemverilog
+// 输出逻辑
+assign y = (state ==  s0 | state ==  s1);
+```
+
+### A.6.3 具有输入的FSM
+
+![image-20230527224511429](https://gitee.com/ephtiny/image/raw/master/img/202305272245485.png)
+
+​	例A.38描述了一个具有输入a和两个输出的有限状态机(History FSM),如图A.35所示
+
+- 若输入现在与它在上一周期时相同，那么输出×为真(true);
+- 若输入现在与它在上两个周期时都相同，那么输出y为真(true)
+
+​	状态转移图表明这是一个Mealy状态机，因为它的输出取决于状态及当前输入
+
+#### 例A.38 History FSM
+
+```systemverilog
+module historyFSM(input		logic clk,
+                  input		logic reset,
+                  input		logic a,
+                  output	logic x, y);
+    
+    typedef enum logic [2:0] {s0, s1, s2, s3, s4} statetype;
+    statetype state, nextstate;
+    
+    // 状态寄存器
+    always_ff @ (posedge clk)
+        if (reset) state <= s0;
+        else	   state <= nextstate;
+    
+    // 下一状态逻辑
+    always_comb
+        case (state)
+            s0: if (a)	nextstate = s3;
+            	else	nextstate = s1;
+            s1: if (a)	nextstate = s3;
+            	else	nextstate = s2;
+            s2: if (a)	nextstate = s3;
+            	else	nextstate = s2;
+            s3: if (a)	nextstate = s4;
+            	else	nextstate = s1;
+            s4: if (a)	nextstate = s4;
+            	else	nextstate = s1;
+            default: 	nextstate = s0;
+        endcase
+    
+    // 输出逻辑
+    assign x = ((state == s1 | state == s2) & ~a) |
+        	   ((state == s3 | state == s4) & a);
+    assign y = (state ==  s2 & ~a) | (state == s4 &a);
+endmodule
+```
+
+![image-20230527225553029](https://gitee.com/ephtiny/image/raw/master/img/202305272255093.png)
+
+## *A.7 类型特性
+
+​	标准的Verilog主要使用两种类型：reg和 wire。SystemVerilog引入了lagic类型并放宽了某些要求
+
+- **如果信号出现在一个always代码块中<=或=的左边，那么它必须说明为reg**。**否则，它应当说明为wire**
+
+  取决于always代码块中的敏感表和语句，reg信号可以是一个触发器、锁存器或组合逻辑的榆出
+
+  **除非输入和输出端口已明确说明为reg类型， 否则它们将默认为wire类型**
+
+  以下例子显示了在传统Verilog中如何描述一个触发器：
+
+  ```verilog
+  module flop(input			  clk,
+              input	     [3:0] d,
+              output	reg  [3:0] q);
+      
+      always @ (posedge clk)
+          q <= d;
+  endmodule
+  ```
+
+- logic是reg的异名同义词，用来避免在有关它是否真正是一个触发器的问题上误导用户。**几乎所有的SystemVerilog信号都可以是loglc**。例外是：**具有多个驱动器的信号(例如三态总线)必须说明为一个网略节点(net)**,如在例A.11中描述的那样（这使SystemVerlog在一个logic信号意外连至多个驱动器时能生成一个出错信息而不是x值）
+
+- 网络节点(net)最常用的类型称为wire或tri。 这两种类型是同义的，但wire通常用在存在单个驱动器时（对于具有单个驱动器的信号，将优先考虑使用logic）而**tri用在存在多个驱动器时**
+
+- **当一个tri net被一个或多个驱动器驱动至 同一个值时，它就取那个值**。**当它没有被驱动时， 它就浮空(z)**。**当它被多个驱动器驱动至不同的值(0,1或x)时，它将处于竞争状态(x)**
+
+- 还有其他net类型：
+
+  ![image-20230527232439354](https://gitee.com/ephtiny/image/raw/master/img/202305272324419.png)
+
+  在Verilog中，net被默认为无符号，但如增加一个signal修改符可使该net被处理成带符号的
+
+## *A.8 参数化模块
+
+​	所有的模块都具有固定宽度的输入和输出，但HDL允许使用参数化模块表示可变位宽
+
+#### 例A.40 参教化的N位多路开关
+
+​	例A.40说明一个具有默认宽度为8位的参数化2:1多路开关，然后利用它建立一个8位和12位的4:1多路开关
+
+```systemverilog
+module mux2
+    #(parameter width = 8)
+    (input	logic  [width-1:0] d0, d1,
+     input	logic  			  s,
+     output	logic  [width-1:0] y);
+    
+    assign y = s ? d1 : d0;
+endmodule
+```
+
+- SystemVerilog九许使用输入和输出前面的#(parameter⋯)语句定义参数。parameter语句包括该参教即(width)(宽度)的默认值(8),输入和输出中的位数可以由这个参教决定。
+
+```systemverilog
+module mux4_8(input		logic  [7:0] d0, d1, d2, d3,
+              input		logic  [1:0] s,
+              output	logic  [7:0] y);
+    
+    logic  [7:0] low, hi;
+    
+    mux2 lowmux(d0, d1, s[0], low);
+    mux2 himux(d2, d3, s[0], hi);
+    mux2 outmux(low, hi, s[1], y);
+endmodule
+```
+
+​	8位的4:1多路开关采用默认宽度对三个2 :1多路开关进行实例化，而12位的多路开关mux4_12需要**利用在实例名前面的#()取代默认宽度**
+
+```systemverilog
+module mux4_12(input	logic  [11:0] d0, d1, d2, d3,
+               input	logic  [1:0] s,
+               output	logic  [11:0] y);
+    
+    logic  [11:0] low, hi;
+    
+    mux2 #(12) lowmux(d0, d1, s[0], low);
+    mux2 #(12) himux(d2, d3, s[0], hi);
+    mux2 #(12) outmux(low, hi, s[1], y);
+endmodule
+```
+
+![image-20230527234645583](https://gitee.com/ephtiny/image/raw/master/img/202305272346652.png)
+
+#### 例A.41 参教化的N:2^N^译码器
+
+​	该译码器使用阻塞赋值将所有位先置0,然后再将合适的位改为1
+
+```systemverilog
+module decoder #(parameter N = 3)
+    		   (input	logic  [N-1:0]    a,
+     			output	logic  [2**N-1:0] y);
+    
+    always_comb
+        begin
+            y = 0;
+            y[a] = 1;
+        end
+endmodule
+```
+
+- 2**N表示2^N^
+
+#### 例A.42 参数化的N榆入与门
+
+​	HDL也提供**generate语句，它可以根据参数值生成数量可变的硬件**。generate**支持for循环语句**和**if语句**以决定生成多少个什么类型的硬件(很容易生成大量并不有意需要的硬件)
+
+```systemverilog
+module andN
+    #(parameter width = 8)
+    (input	logic  [width-1:0] a,
+     output	logic		  	  y);
+    
+    genvar i;
+    logic  [width-1:1] x;
+    
+    generate
+        for (i=1; i<width; i=i+1) begin:forloop
+            if (i == 1)
+                assign x[1] = a[0] & a[1];
+            else
+                assign x[i] = a[i] & x[i-1];
+        end
+    endgenerate
+    assign y = x[width-1];
+endmodule
+```
+
+- for语句循环通过i = 1,2,⋯,width-1生成许多依次相连的与(AND)门
+- 在generate for循环中的begin之后必须是一个“:”及一个随意的标号(本例中为forloop)
+
+​	也可以选择写成 `assign y = &a`
+
+![image-20230527235727756](https://gitee.com/ephtiny/image/raw/master/img/202305272357816.png)
+
+## *A.9 存储器
+
+​	可以使用一种专门的存储器生成工具或存储器库，或者定制设计存储器。
+
+### A.9.1 RAM
+
+#### 例A.43 RAM
+
+​	例A.43描述了一个具有独立读和写数据总线的单口64字×32位同步RAM。
+
+​	当写使能we有效时，din在时钟上升沿时被写人到RAM的所选地址中。任何时候，RAM被读出到dout上
+
+```systemverilog
+module ram #(parameter N = 6, M = 32)
+    (input	logic		  clk,
+     input	logic		  we,
+     input	logic  [N-1:0] adr,
+     input	logic  [M-1:0] din,
+     output	logic  [M-1:0] dout);
+    
+    logic  [M-1:0] mem[2**N-1:0];
+    
+    always @(posedge clk)
+        if (we) mem[adr] <= din;
+    
+    assign dout = mem[adr];
+endmodule
+```
+
+![image-20230528000818680](https://gitee.com/ephtiny/image/raw/master/img/202305280008742.png)
+
+#### 例A.44 具有双向数据总线的RAM
+
+​	例A.44显示了如何修改这个RAM使它具有一条双向数据总线，这将减少所需要的连线数量，但要求在该总线的两端增加三态缓冲器
+
+​	在VLSI实现时，三态总线上通常优先考虑采用点至点的连线
+
+```systemverilog
+module ram #(parameter N = 6, M = 32)
+    (input	logic		  clk,
+     input	logic		  we,
+     input	logic  [N-1:0] adr,
+     inout	tri    [M-1:0] data);
+    
+    logic  [M-1:0] mem[2**N-1:0];
+    
+    always @(posedge clk)
+        if (we) mem[adr] <= data;
+    
+    assign data = we ? `z : mem[adr];
+endmodule
+```
+
+- data说明为**inout端口**，因为它**既可以用来作为输入又可以用来作为输出**
+- ``z` 是用 `z 填充一条任意长度总线的速写。
+
+![image-20230528001218294](https://gitee.com/ephtiny/image/raw/master/img/202305280012351.png)
+
+### A.9.2 多端口寄存器堆
+
+​	一个多端口寄存器堆具有几个读和写端口
+
+#### 例A.45 三端口寄存器堆
+
+​	例A.45描述了一个具有三个端口的同步寄存器堆
+
+```systemverilog
+module ram3port #(parameter N = 6, M = 32)
+    (input	logic		   clk,
+     input	logic		   we3,
+     input	logic  [N-1:0] a1, a2, a3,
+     output	logic  [M-1:0] d1, d2,
+     input	logic  [M-1:0] d3);
+    
+    logic  [M-1:0] mem[2**N-1:0];
+    always @(posedge clk)
+        if (we3) mem[a3] <= d3;
+    
+    assign d1 = mem[a1];
+    assign d2 = mem[a2];
+endmodule
+```
+
+![image-20230528002041941](https://gitee.com/ephtiny/image/raw/master/img/202305280020000.png)
+
+### A.9.3 ROM
+
+​	只读存储器通常用case语句建模，每个人口(entry)对应一个字
+
+#### 例A.48 ROM
+
+​	例A.46描述了一个4字 ×3位的ROM
+
+```systemverilog
+module rom(input	logic  [1:0] adr,
+           output	logic  [2:0] dout);
+    
+    always_comb
+        case(adr)
+            2'b00: dout = 3'b011;
+            2'b01: dout = 3'b110;
+            2'b10: dout = 3'b100;
+            2'b11: dout = 3'b010;
+        endcase
+endmodule
+```
+
+## A.10 测试程序
+
+- 测试程序(testhench)是一个HDL模块，它用来测试称为待测器件(Device Under Test,DUT) 的另一个模块
+- 输人和预期的输出图案称为测试向量(test vector)
+
+#### 例A.47 测试程序
+
+​	先对DUT实例化，然后加载输人。加载输人采用阻塞赋值和延时并按照正确的顺序进行
+
+```systemverilog
+module testbench1();
+    logic a, b, c;
+    logic y;
+    
+    // 实例化待测器件
+    sillyfunction dut(a, b, c, y);
+    
+    // 每次加载一个输入
+    initial begin
+        a = 0; b = 0; c = 0; #10;
+        c = 1;				#10;
+        b = 1; c = 0;		#10;
+        c = 1;				#10;
+        a = 1; b = 0; c = 0; #10;
+        c = 1;				#10;
+        b = 1; c = 0;		#10;
+        c = 1;				#10;
+    end
+endmodule
+```
+
+- **initial语句==只==用在测试程序中进行模拟**，而不能用在想要综合成实际硬件的模块中
+
+#### 例A.48 自检查测试程序
+
+```systemverilog
+module testbench2();
+    logic a, b, c;
+    logic y;
+    
+    // 实例化待测器件
+    sillyfunction dut(a, b, c, y);
+    
+    // 每次加载一个输入
+    // 检查结果
+    initial begin
+        a = 0; b = 0; c = 0; #10;
+        assert (y === 1) else $error("000 faild.");
+        c = 1;				#10;
+        assert (y === 0) else $error("001 faild.");
+        b = 1; c = 0;		#10;
+        assert (y === 0) else $error("010 faild.");
+        c = 1;				#10;
+        assert (y === 0) else $error("011 faild.");
+        a = 1; b = 0; c = 0; #10;
+        assert (y === 1) else $error("100 faild.");
+        c = 1;				#10;
+        assert (y === 1) else $error("101 faild.");
+        b = 1; c = 0;		#10;
+        assert (y === 0) else $error("110 faild.");
+        c = 1;				#10;
+        assert (y === 0) else $error("111 faild.");
+    end
+endmodule
+```
+
+- **assert语句检查指定的条件是否为真(tmue**。如果不是，它将执行else语句(assert在综合时被忽略)
+- **$error是一个系统任务 (system task),它打印出横述这一断言(anaertion)失败的出错信息**
+- ，采用 `==` 或 `!=` 执行比较操作时，如采其中一个操作数为x或z,它会虚假地表示成相等，因而**测试程序中应采用 ==`===` 和 `!==`== 操作符，因为这两个操作符对x或z都能正确工作**。
+
+#### 例A.49 带测试向量文伴的测试程序
+
+​	该测试程序使用了无激励表的always/process语句生成时钟，所以它将不断进行重新求值
+
+​	在模拟开始时，它从磋盘文件中读人测试向量并送出两个周期的reset脉冲
+
+```systemverilog
+module testbench3();
+    logic		 clk, reset;
+    logic		 a, b, c, yexpected
+    logic		 y;
+    logic  [31:0] vectornum, errors;
+    logic  [3:0]  testvectors[10000:0];
+    
+    // 初始化待测器件
+    sillyfunction dut(a, b, c, y);
+    
+    // 生成时钟
+    always
+        begin
+            clk = 1; #5; clk = 0; #5;
+        end
+    
+    // 测试开始时，装入向量和脉冲复位
+    initial
+        begin
+            $readmemb("example.tv", testvectors);
+            vectornum = 0; errors = 0;
+            reset = 1; #27; reset = 0;
+        end
+    
+    // 在clk上升沿时加载测试向量
+    always @(posedge clk)
+        begin
+            #1; {a, b, c, yexpected} = testvectors[vectornum];
+        end
+    
+    // 在clk下降沿时检查结果
+    always @(negedge clk)
+        if (~reset) begin  // skip during reset
+            if (y !== yexpected) begin
+                $display("Error: inputs = %b", {a, b, c});
+                $display("  outputs = %b {%b expected}", y, yexpected)
+                errors = errors + 1;
+            end
+            vectornum = vectornum + 1;
+            if (testvectors[vectornum] === `bx) begin
+                $display("%d tests completed with %d errors", vectornum, errors);
+                $finish;
+            end
+        end
+endmodule
+```
+
+用二进制数写出输入和预期输出的文本文件example.tv：
+
+```
+000_1
+001_0
+010-0 
+011-0 
+100-1 
+101-1 
+110-0 
+111-0
+```
+
+
+
+- `$reacmemb` 将一个二进制数丈件读入到一个阵列中 `$zeacmemh` 与它类似，但它读入的是一 个十六进制教文件
+- `$display` 是一个在模拟器宵口中打印信息的系统任务
+- `$finish` 结来模拟
+
+## *A.11 SystemVerilog网表
+
+- 门级基本单元包括**not**、**and**、**or**、**xor**、**nand**、**or**和**xnor**。首先说明输出，接着可以是几个输 入。例如，一个4输入与门可以说明如： `and g1(y, a, b, c, d)`
+- 晶体管级基本单元包括**tranif1**、**tranif0**、**rtranif1**、**rtranif0**
+  - tranif1为一个nMOS晶体 管(即一个在栅极为'1'时导通的晶体管
+  - tranif0为一个pMOS晶体管
+  - rtranif元件为电阻性晶体管，即一个弱晶体管，它能被一个较强的驱动器抑制
+- 逻辑0和1值(GND和V~DD~)定义为supply0和surply1类型
+
+#### A.11.1 伪nMOS或非门网表
+
+![image-20230528003034709](https://gitee.com/ephtiny/image/raw/master/img/202305280030767.png)
+
+​	图A.44中具有弱上拉的伪-nMOS或非门可以用三个晶体管来建模
+
+​	y必须说明为tri网络节点(net),因为它可能由多个晶体管驱动
+
+```systemverilog
+module nor_pseudonmos(input		logic a, b,
+                      output	tri	  y);
+    
+    supply0 gnd;
+    supply1 vdd;
+    
+    tranif1		n1(y, gnd, a);
+    tranif1		n2(y, gnd, b);
+    rtranif0	p1(y, vdd, gnd);
+endmodule
+```
+
+#### A.11.2 锁存器网表
+
+![image-20230528003403188](https://gitee.com/ephtiny/image/raw/master/img/202305280034246.png)
+
+​	当锁存器变为不透明时，在前馈路径截止的同时反馈路径导通。根据竞争条件，有可能出现状态节点浮空或经历竞争的风险。
+
+​	为解决这个问题，**状态节点建模为trireg**(所以它不会浮空)而**反馈晶体管建模为弱晶体管**(所以它们不会引起竟争)。**其余节点为tri net**，因为它们可能由多个晶体管驱动
+
+```systemverilog
+module latch(input	logic ph, phb, d,
+             output	tri   q);
+    
+    trireg x;
+    tri	   xb, nn12, nn56, pp12, pp56;
+    supply0 gnd;
+    supply1 vdd;
+    
+    // input stage
+    tranif1		n1(nn12, gnd, d);
+    tranif1		n2(x, nn12, ph);
+    tranif0		p1(pp12, vdd, d);
+    tranif0		p2(x, pp12, phb);
+    
+    // output inverter
+    tranif1		n3(q, gnd, x);
+    tranif0		p3(q, vdd, x);
+    
+    // xb inverter
+    tranif1		n4(xb, gnd, x);
+    tranif0		p4(xb, vdd, x);
+    
+    // feedback tristate
+    tranif1		n5(nn56, gnd, xb);
+    rtranif1	n6(x, nn56, phb);
+    tranif0		p5(pp56, vdd, xb);
+    rtranif0	p6(x, pp56, ph);
+endmodule
+```
+
+​	tranif器件是双向的，即它的源极和漏极对称。txanit元件最好只用于模拟
+
 # 实例
 
 ## 自动售货机
@@ -2908,3 +3769,541 @@ vending_machine inst_vending_machine(
 endmodule
 ```
 
+
+
+## 三段式有限状态机
+
+参考：[有限状态机（FSM）写法的总结（一段式，二段式，三段式）_三段式fsm復位_ffdia的博客-CSDN博客](https://blog.csdn.net/ffdia/article/details/88773747?ops_request_misc=&request_id=&biz_id=102&utm_term=有限状态机的3段式写法&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-88773747.142^v87^control_2,239^v2^insert_chatgpt&spm=1018.2226.3001.4187)
+
+​		   [三段式有限状态机_三段式状态机_今朝无言的博客-CSDN博客](https://blog.csdn.net/qq_43557686/article/details/124494399?ops_request_misc=%7B%22request%5Fid%22%3A%22168485019116800197084554%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&request_id=168485019116800197084554&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-124494399-null-null.142^v87^control_2,239^v2^insert_chatgpt&utm_term=有限状态机的3段式写法&spm=1018.2226.3001.4187)
+
+​	 状态机描述时关键是要描述清楚几个状态机的要素，即如何进行状态转移，每个状态的输出是什么，状态转移的条件等。具体描述时方法各种各样，最常见的有三种描述方式：一段式、二段式、三段式
+
+​	对于简单的状态机，可以使用一段式，其代码量以及使用资源都最少，但如果状态机较复杂，一段式状态机会对代码维护产生很大的不便，因此多使用便于维护的三段式状态机。
+
+### 一段式状态机
+
+​	整个状态机写到一个always模块里面，在该模块中既描述状态转移，又描述状态的输入和输出
+
+#### 例子
+
+```systemverilog
+//一段式状态机
+module FSM1(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg	[3:0]	state;
+always @(posedge clk or negedge  rst_n)begin
+	if(!rst_n)begin
+		state	<= S1;
+		o		<= 0;
+	end
+	else begin
+		case(state)
+		S1: begin
+			state	<= S2;
+			o		<= i + 1;
+		end
+		S2: begin
+			state	<= S3;
+			o		<= i + 2;
+		end
+		S3: begin
+			state	<= S4;
+			o		<= i + 3;
+		end
+		S4: begin
+			state	<= S1;
+			o		<= i + 4;
+		end
+		default: begin
+			state	<= S1;
+			o		<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+![在这里插入图片描述](https://gitee.com/ephtiny/image/raw/master/img/202305232317268.jpeg)
+
+### 二段式状态机
+
+​	用两个always模块来描述状态机，其中一个always模块采用同步时序描述状态转移；另一个模块采用组合逻辑判断状态转移条件，描述状态转移规律以及输出
+
+#### 例子
+
+```systemverilog
+//二段式状态机
+module FSM2(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg		[3:0]	state;
+reg		[3:0]	next_state;
+
+always @(posedge clk or negedge  rst_n)begin	//时序逻辑
+	if(!rst_n)begin
+		state	<= S1;
+	end
+	else begin
+		state	<= next_state;
+	end
+end
+
+always @(*) begin								//组合逻辑，产生next_state和output
+	if(!rst_n) begin
+		next_state	<= S1;
+		o	<= 0;
+	end
+	else begin
+		case(state)
+		S1: begin
+			next_state	<= S2;
+			o			<= i + 1;
+		end
+		S2: begin
+			next_state	<= S3;
+			o			<= i + 2;
+		end
+		S3: begin
+			next_state	<= S4;
+			o			<= i + 3;
+		end
+		S4: begin
+			next_state	<= S1;
+			o			<= i + 4;
+		end
+		default: begin
+			next_state	<= S1;
+			o			<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+![在这里插入图片描述](https://gitee.com/ephtiny/image/raw/master/img/202305232317684.jpeg)
+
+### 三段式状态机
+
+​	在两个always模块描述方法基础上，使用三个always模块，一个always模块采用同步时序描述状态转移，一个always采用组合逻辑判断状态转移条件，描述状态转移规律，另一个always模块描述状态输出(可以用组合电路输出，也可以时序电路输出)。
+
+#### 模版代码
+
+```systemverilog
+//第一个进程，同步时序always模块，格式化描述次态寄存器迁移到现态寄存器
+
+always @ (posedge clk or negedge rst_n)   //异步复位
+
+if(!rst_n)
+
+         current_state <= IDLE;
+
+else
+
+         current_state <= next_state; //注意，使用的是非阻塞赋值
+
+//第二个进程，组合逻辑always模块，描述状态转移条件判断
+
+always @ (current_state) //电平触发，现存状态为敏感信号
+
+begin
+
+        next_state = x; //要初始化，使得系统复位后能进入正确的状态
+
+case(current_state)
+
+        S1: if(...)
+
+                next_state = S2; //阻塞赋值
+
+        S2: if(...)
+
+                next_state = S3; //阻塞赋值
+
+...
+
+endcase
+
+end
+
+//第三个进程，同步时序always模块，格式化描述次态寄存器输出
+
+always @ (posedge clk or negedge rst_n)
+
+begin
+
+...//初始化
+
+case(next_state)
+
+       S1:
+
+              out1 <= 1'b1; //注意是非阻塞逻辑
+
+        S2:
+
+              out2 <= 1'b1;
+
+         default:... //default的作用是免除综合工具综合出锁存器
+
+endcase
+
+end
+```
+
+#### 例子
+
+```systemverilog
+//三段式状态机
+module FSM3(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg		[3:0]	state;
+reg		[3:0]	next_state;
+
+always @(posedge clk or negedge  rst_n)begin	//时序逻辑
+	if(!rst_n)begin
+		state	<= S1;
+	end
+	else begin
+		state	<= next_state;
+	end
+end
+
+always @(*) begin								//组合逻辑，产生next_state
+	if(!rst_n) begin
+		next_state	<= S1;
+	end
+	else begin
+		case(state)
+		S1: begin
+			next_state	<= S2;
+		end
+		S2: begin
+			next_state	<= S3;
+		end
+		S3: begin
+			next_state	<= S4;
+		end
+		S4: begin
+			next_state	<= S1;
+		end
+		default: begin
+			next_state	<= S1;
+		end
+		endcase
+	end
+end
+
+always @(*) begin								//组合逻辑，基于state产生逻辑输出
+	if(!rst_n) begin
+		o	<= 0;
+	end
+	else begin
+		case(state)
+		S1: begin
+			o	<= i + 1;
+		end
+		S2: begin
+			o	<= i + 2;
+		end
+		S3: begin
+			o	<= i + 3;
+		end
+		S4: begin
+			o	<= i + 4;
+		end
+		default: begin
+			o	<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+![在这里插入图片描述](https://gitee.com/ephtiny/image/raw/master/img/202305232316430.jpeg)
+
+##### 第三段为基于state的组合逻辑
+
+```systemverilog
+//三段式状态机
+module FSM3(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg		[3:0]	state;
+reg		[3:0]	next_state;
+
+always @(posedge clk or negedge  rst_n)begin	//时序逻辑
+	if(!rst_n)begin
+		state	<= S1;
+	end
+	else begin
+		state	<= next_state;
+	end
+end
+
+always @(*) begin								//组合逻辑，产生next_state
+	if(!rst_n) begin
+		next_state	<= S1;
+	end
+	else begin
+		case(state)
+		S1: begin
+			next_state	<= S2;
+		end
+		S2: begin
+			next_state	<= S3;
+		end
+		S3: begin
+			next_state	<= S4;
+		end
+		S4: begin
+			next_state	<= S1;
+		end
+		default: begin
+			next_state	<= S1;
+		end
+		endcase
+	end
+end
+
+always @(*) begin								//组合逻辑，基于state产生逻辑输出
+	if(!rst_n) begin
+		o	<= 0;
+	end
+	else begin
+		case(state)
+		S1: begin
+			o	<= i + 1;
+		end
+		S2: begin
+			o	<= i + 2;
+		end
+		S3: begin
+			o	<= i + 3;
+		end
+		S4: begin
+			o	<= i + 4;
+		end
+		default: begin
+			o	<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+##### 第三段为基于state的时序逻辑
+
+```systemverilog
+//三段式状态机2
+module FSM3_2(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg		[3:0]	state;
+reg		[3:0]	next_state;
+
+always @(posedge clk or negedge  rst_n)begin	//时序逻辑
+	if(!rst_n)begin
+		state	<= S1;
+	end
+	else begin
+		state	<= next_state;
+	end
+end
+
+always @(*) begin								//组合逻辑，产生next_state
+	if(!rst_n) begin
+		next_state	<= S1;
+	end
+	else begin
+		case(state)
+		S1: begin
+			next_state	<= S2;
+		end
+		S2: begin
+			next_state	<= S3;
+		end
+		S3: begin
+			next_state	<= S4;
+		end
+		S4: begin
+			next_state	<= S1;
+		end
+		default: begin
+			next_state	<= S1;
+		end
+		endcase
+	end
+end
+
+always @(posedge clk or negedge rst_n) begin	//时序逻辑
+	if(!rst_n) begin
+		o	<= 0;
+	end
+	else begin
+        case(state)			//基于当前状态state产生同步时序输出，其输出将出现一拍延迟
+		S1: begin
+			o	<= i + 1;
+		end
+		S2: begin
+			o	<= i + 2;
+		end
+		S3: begin
+			o	<= i + 3;
+		end
+		S4: begin
+			o	<= i + 4;
+		end
+		default: begin
+			o	<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+![在这里插入图片描述](https://gitee.com/ephtiny/image/raw/master/img/202305232319930.jpeg)
+
+##### 第三段为基于next_state的时序逻辑
+
+```systemverilog
+//三段式状态机3
+module FSM3_3(
+input				clk,
+input				rst_n,
+input		[3:0]	i,
+output	reg	[3:0]	o
+);
+
+parameter	S1	= 4'b0001;
+parameter	S2	= 4'b0010;
+parameter	S3	= 4'b0100;
+parameter	S4	= 4'b1000;
+
+reg		[3:0]	state;
+reg		[3:0]	next_state;
+
+always @(posedge clk or negedge  rst_n)begin	//时序逻辑
+	if(!rst_n)begin
+		state	<= S1;
+	end
+	else begin
+		state	<= next_state;
+	end
+end
+
+always @(*) begin								//组合逻辑
+	if(!rst_n) begin
+		next_state	<= S1;
+	end
+	else begin
+		case(state)
+		S1: begin
+			next_state	<= S2;
+		end
+		S2: begin
+			next_state	<= S3;
+		end
+		S3: begin
+			next_state	<= S4;
+		end
+		S4: begin
+			next_state	<= S1;
+		end
+		default: begin
+			next_state	<= S1;
+		end
+		endcase
+	end
+end
+
+always @(posedge clk or negedge rst_n) begin	//同步时序逻辑
+	if(!rst_n) begin
+		o	<= 0;
+	end
+	else begin
+        case(next_state)	//使用next_state，此时其输出与一段式FSM相同
+		S1: begin
+			o	<= i + 1;
+		end
+		S2: begin
+			o	<= i + 2;
+		end
+		S3: begin
+			o	<= i + 3;
+		end
+		S4: begin
+			o	<= i + 4;
+		end
+		default: begin
+			o	<= 0;
+		end
+		endcase
+	end
+end
+
+endmodule
+```
+
+![在这里插入图片描述](https://gitee.com/ephtiny/image/raw/master/img/202305232319466.jpeg)
+
+### 关于状态的定义
+
+![image-20230523232110181](https://gitee.com/ephtiny/image/raw/master/img/202305232321246.png)
