@@ -1,0 +1,19 @@
+`timescale 1ns/1ns
+module tb_divideby3FSM();
+    logic clk;
+    logic reset;
+    logic y;
+    
+    divideby3FSM A36(
+        . clk(clk),
+        . reset(reset),
+        . y(y));
+    
+    always #10 clk = ~clk;
+    
+    initial begin
+        clk = 0;
+        reset = 2'b00;
+	#100 $stop;
+    end
+endmodule

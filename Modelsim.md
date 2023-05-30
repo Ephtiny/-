@@ -1854,6 +1854,31 @@ endmodule
 - 如果a等于b, 那么相等比较(equality comparison)(a==b)的求值结果为1,否则为0。
 - 不相等比较(inequality comparison)(a!=b)执行相反的操作，即若a不等于b,求值结果为1。
 
+**tb_divideby3FSM.sv**
+
+```systemverilog
+`timescale 1ns/1ns
+module tb_divideby3FSM();
+    logic clk;
+    logic reset;
+    logic y;
+    
+    divideby3FSM A36(
+        . clk(clk),
+        . reset(reset),
+        . y(y));
+    
+    always #10 clk = ~clk;
+    
+    initial begin
+        clk = 1;
+        reset = 1;
+	#10 reset = 0;
+	#100 $stop;
+    end
+endmodule
+```
+
 ![image-20230527222731890](https://gitee.com/ephtiny/image/raw/master/img/202305272227958.png)
 
 - 图A.34显示了一个状态转移图，图中双圈表明S0为复位状态
