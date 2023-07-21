@@ -1,0 +1,58 @@
+`timescale 1ns/1ns
+module tb_key_debounce();
+
+  // Inputs
+  reg clk;
+  reg rst_n;
+  reg key;
+  
+  // Outputs
+  wire flag;
+  wire key_value;
+  
+  // Instantiate the module under test
+  key_debounce dut (
+    .clk(clk),
+    .rst_n(rst_n),
+    .key(key),
+    .flag(flag),
+    .key_value(key_value)
+  );
+  
+  // Clock generator
+  always begin
+    clk = 0;
+    #5;  // Toggle the clock every 5 time units
+    clk = 1;
+    #5;
+  end
+  
+  // Stimulus
+  initial begin
+    // Initialize inputs
+    rst_n = 0;
+    key = 0;
+    #10;  // Wait for a few clock cycles
+    
+    // Release reset
+    rst_n = 1;
+    #10;  // Wait for a few clock cycles
+    
+    // Apply stimulus
+    key = 1;
+    #10;  // Wait for a few clock cycles
+    
+    key = 0;
+    #30;  // Wait for a few clock cycles
+    
+    key = 1;
+    #20;  // Wait for a few clock cycles
+    
+    key = 0;
+    #40;  // Wait for a few clock cycles
+    #10_000_500  ;//50ms
+    $stop;  // End the simulation
+  end
+
+endmodule
+

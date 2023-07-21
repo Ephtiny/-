@@ -1,0 +1,54 @@
+{E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v} {1 {vlog -work work -vopt -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module top_vending_machine
+
+Top level modules:
+	top_vending_machine
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v} {1 {vlog -work work -vopt -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module sel_drive
+
+Top level modules:
+	sel_drive
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v} {1 {vlog -work work -vopt -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module key_debounce
+
+Top level modules:
+	key_debounce
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv} {2 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module my_vending_machine
+** Warning: E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv(28): (vlog-2182) 'money_flag' might be read before written in always_comb or always @* block.
+
+** Warning: E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv(27): (vlog-2182) 'cnt' might be read before written in always_comb or always @* block.
+
+
+Top level modules:
+	my_vending_machine
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v} {1 {vlog -work work -vopt -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module vending_machine
+
+Top level modules:
+	vending_machine
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v} {1 {vlog -work work -vopt -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module seg_scan
+
+Top level modules:
+	seg_scan
+
+} {} {}} {E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv} {1 {vlog -work work -vopt -sv -stats=none {E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv}
+Model Technology ModelSim SE-64 vlog 10.4 Compiler 2014.12 Dec  3 2014
+-- Compiling module tb_my_vending_machine
+
+Top level modules:
+	tb_my_vending_machine
+
+} {} {}}

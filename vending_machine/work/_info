@@ -8,103 +8,183 @@ z2
 !i10f 100
 cModel Technology
 Z0 dE:/study/Digital Circuit/Digital_Circuit/vending_machine
+T_opt
+!s110 1685976023
+V=fObY;54hSW_D3QC>9aim1
+04 15 4 work key_debounce_tb fast 0
+=1-9c2dcd0cb78e-647df3d1-310-21ac
+Z1 o-quiet -auto_acc_if_foreign -work work
+n@_opt
+Z2 OL;O;10.4;61
+R0
+T_opt1
+!s110 1685976640
+V5Eb<Wi]KgVQ?OKd?@Y;5e1
+04 15 4 work tb_key_debounce fast 0
+=1-9c2dcd0cb78e-647df640-1b0-34d4
+R1
+n@_opt1
+R2
+R0
 vkey_debounce
-Z1 !s110 1683998152
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
 !i10b 1
 !s100 ?0202z[NW?Il`693KU<ZA3
 IdKid8Z<?bcWL60[B95zF93
-Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
 w1683997730
 8E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v
 FE:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v
 L0 1
-Z3 OL;L;10.4;61
+Z4 OL;L;10.4;61
+!s108 1685976163.853000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
+!i113 0
+Z5 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vmy_vending_machine
+Z6 DXx6 sv_std 3 std 0 22 WmjPaeP=7F5?QFXzJ>D[Q2
+R3
 r1
 !s85 0
 31
-!s108 1683998152.819000
-!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
-!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/key_debounce.v|
+!i10b 1
+!s100 IR]<SnbkSk2g=njJOQ9l11
+I=H>z`P@aGClTbilQSL9C:3
+!s105 my_vending_machine_sv_unit
+S1
+R0
+w1686300816
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv
+L0 1
+R4
+!s108 1686300826.527000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/my_vending_machine.sv|
 !i113 0
-Z4 o-work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z7 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 vseg_scan
-R1
+Z8 !s110 1685976163
 !i10b 1
 !s100 O`:7j1CPSk:Yj;8a6g:0J1
 IKXfAW3Kb:0=Q5gN5kCL9X1
-R2
+R3
 R0
 w1683998024
 8E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v
 FE:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v
 L0 1
-R3
+R4
 r1
 !s85 0
 31
-!s108 1683998152.871000
+!s108 1685976163.906000
 !s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v|
-!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/seg_scan.v|
 !i113 0
-R4
+R5
 vsel_drive
-R1
+R8
 !i10b 1
 !s100 _Q1:40gO04cLh[]oQhHoC1
 I6:8@86hz<Lzj7YUZ8P;YQ3
-R2
+R3
 R0
 w1683997908
 8E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v
 FE:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v
 L0 1
+R4
+r1
+!s85 0
+31
+!s108 1685976163.958000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
+!i113 0
+R5
+vtb_key_debounce
 R3
 r1
 !s85 0
 31
-!s108 1683998152.929000
-!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
-!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/sel_drive.v|
-!i113 0
+!i10b 1
+!s100 [mZ[GKKfT82A3V;[@AW=L0
+I^9_7]@JnB8jA>JS9]a<QS2
+R0
+w1685976835
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_key_debounce.v
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_key_debounce.v
+L0 2
 R4
+!s108 1685976841.423000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_key_debounce.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_key_debounce.v|
+!i113 0
+R5
+vtb_my_vending_machine
+R6
+R3
+r1
+!s85 0
+31
+!i10b 1
+!s100 ZB;9D5VITBL8VDdd<deGC1
+IPz7g]4QmlNnoaDicHE>Zl3
+!s105 tb_my_vending_machine_sv_unit
+S1
+R0
+w1686302493
+8E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv
+FE:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv
+L0 2
+R4
+!s108 1686302501.024000
+!s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/tb_my_vending_machine.sv|
+!i113 0
+R7
 vtop_vending_machine
-R1
+Z9 !s110 1685976164
 !i10b 1
 !s100 i6M?CQLOacNO]EeU@T_;i1
 I:]@4V?F11=]O7PNW2GYHP0
-R2
+R3
 R0
 w1683998122
 8E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v
 FE:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v
 L0 1
-R3
+R4
 r1
 !s85 0
 31
-!s108 1683998152.984000
+!s108 1685976164.008000
 !s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v|
-!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/top_vending_machine.v|
 !i113 0
-R4
+R5
 vvending_machine
-!s110 1683998153
+R9
 !i10b 1
 !s100 lF<U<<=3eJ=;_gbz>K:TX3
 I4@LGmo>lYXGa_WU2eRh6`0
-R2
+R3
 R0
 w1683998071
 8E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v
 FE:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v
 L0 1
-R3
+R4
 r1
 !s85 0
 31
-!s108 1683998153.047000
+!s108 1685976164.056000
 !s107 E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v|
-!s90 -reportprogress|300|-work|work|E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v|
+!s90 -reportprogress|300|-work|work|-vopt|-stats=none|E:/study/Digital Circuit/Digital_Circuit/vending_machine/vending_machine.v|
 !i113 0
-R4
+R5

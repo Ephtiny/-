@@ -1,0 +1,68 @@
+`timescale 1ns/1ns
+module tb_my_vending_machine();
+
+  reg clk;
+  reg rst_n;
+  reg [2:0] key_value;
+  
+  wire beep;
+  wire [3:0] money_flag;
+  
+  my_vending_machine dut (
+    .clk(clk),
+    .rst_n(rst_n),
+    .key_value(key_value),
+    .beep(beep),
+    .money_flag(money_flag)
+  );
+  
+  initial begin
+    // 初始化输入信号
+    clk = 0;
+    rst_n = 1;
+    key_value = 3'b111;
+    
+    // 延迟一段时间以进行复位
+    #10 rst_n = 0;
+    #10 rst_n = 1;
+    
+    // 模拟投入0.5元
+    #10 key_value = 3'b101;
+    
+    // 模拟投入1元
+    #10 key_value = 3'b110;
+    
+    // 模拟退钱
+    #10 key_value = 3'b011;
+    
+    // 模拟投入2.5元
+    #10 key_value = 3'b101;
+    #10 key_value = 3'b110;
+    #10 key_value = 3'b110;
+    
+    // 模拟投入3元
+    #10 key_value = 3'b110;
+    #10 key_value = 3'b110;
+    #10 key_value = 3'b110;
+    
+    // 模拟自动退钱
+    #10 key_value = 3'b101;
+    
+    // 延迟一段时间以触发计数超时
+    #20010;
+    
+    // 结束仿真
+    $finish;
+  end
+  
+  always begin
+    #5 clk <= ~clk;  // 时钟翻转
+  end
+  
+  // 显示输入和输出的值
+  always @(posedge clk) begin
+    $display("Time: %0t  key_value = %b  money_flag = %b  beep = %b", $time, key_value, money_flag, beep);
+  end
+  
+endmodule
+
